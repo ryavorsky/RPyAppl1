@@ -1,3 +1,5 @@
+# Check whether the input/output folders exist
+
 import sys
 import os
 

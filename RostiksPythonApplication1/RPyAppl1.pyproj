@@ -26,5 +26,8 @@
     <Compile Include="CheckFolders.py" />
     <Compile Include="Main.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
