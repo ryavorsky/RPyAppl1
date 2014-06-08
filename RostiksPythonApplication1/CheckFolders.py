@@ -2,6 +2,7 @@
 
 import sys
 import os
+import time
 
 def TestDirs(inDir, outDir):
     try:
@@ -16,14 +17,14 @@ def TestDirs(inDir, outDir):
         for inputFileName in inputFiles:
             print('\t' + inputFileName + '\n')
 
-    try:
-        os.chdir(outDir)
-        print('The output folder is found:\n\t' + outDir + '\n')
+    try: 
+        os.mkdir(outDir)
+        print('The output folder is created:\n\t' + outDir + '\n')
     except Exception:
-        print('Failed to open the outDir:\n\t' + outDir + '\n')
-        try: 
-            os.mkdir(outDir)
-            print('The output folder is created:\n\t' + outDir + '\n')
-        except Exception:
-            print('Failed to create the outDir:\n\t' + outDir + '\n')
-            sys.exit
+        t = time.localtime()
+        outDir = outDir + '_' + str(t[3]) + str(t[4]) + str(t[5])
+        os.mkdir(outDir)
+        print('The output folder is created:\n\t' + outDir + '\n')
+
+    return outDir
+
