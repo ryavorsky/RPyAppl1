@@ -25,7 +25,8 @@
   <ItemGroup>
     <Compile Include="CheckFolders.py" />
     <Compile Include="Main.py" />
-    <Compile Include="Plot.py" />
+    <Compile Include="BuildGraphs.py" />
+    <Compile Include="WriteFiles.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
