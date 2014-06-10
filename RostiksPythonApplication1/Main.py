@@ -9,10 +9,19 @@ outputDir = 'c:\\Direktor\\Output\\1'
 import CheckFolders
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
+# Create resulting reports
+
 import WriteFiles
 WriteFiles.writeTestFiles(outputDir)
+
+import BuildHtml
+BuildHtml.writeHtmlReport(outputDir, 'testRes.htm')
+
+# Create graphics for the reports 
 
 import BuildGraphs
 BuildGraphs.testDiagram(outputDir)
 
-print('Hello World\n' + outputDir)
+# Done! Now can speak to the world
+
+print('Hello World\n See the results in ' + outputDir)
