@@ -9,19 +9,23 @@ outputDir = 'c:\\Direktor\\Output\\1'
 import CheckFolders
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
+import ProcessCSV
+ProcessCSV.readData(inputDir + '\\38408_FCA.csv' )
+
 # Create resulting reports
 
-import WriteFiles
-WriteFiles.writeTestFiles(outputDir)
+#import WriteFiles
+#WriteFiles.writeTestFiles(outputDir)
 
-import BuildHtml
-BuildHtml.writeHtmlReport(outputDir, 'testRes.htm')
+#import BuildHtml
+#BuildHtml.writeHtmlReport(outputDir, 'testRes.htm')
 
 # Create graphics for the reports 
 
-import BuildGraphs
-BuildGraphs.testDiagram(outputDir)
+#import BuildGraphs
+#BuildGraphs.testDiagram(outputDir)
+
 
 # Done! Now can speak to the world
 
-print('Hello World\n See the results in ' + outputDir)
+print('Hello World!\n See the results in ' + outputDir)
