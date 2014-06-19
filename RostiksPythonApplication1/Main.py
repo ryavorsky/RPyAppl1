@@ -10,7 +10,7 @@ import CheckFolders
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
 import ProcessCSV
-ProcessCSV.readData(inputDir + '\\38408_FCA.csv' )
+ProcessCSV.readData(inputDir + '\\38408_table1.csv' )
 
 # Create resulting reports
 

@@ -1,8 +1,9 @@
 import csv
 
 def readData(fileName):
-    schoolData = csv.reader(open(fileName,'rb'), delimiter=';')
-    print('Rows: ' + str(schoolData) )
+    f = open(fileName,'rb')
+    schoolData = csv.reader(f, delimiter='\t')
+    print str(schoolData)
     for row in schoolData:
-        print len(row) 
-        print '; '.join(row)
+        print row
+
