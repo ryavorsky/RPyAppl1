@@ -23,6 +23,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="BuildDot.py" />
     <Compile Include="CheckFolders.py" />
     <Compile Include="class1.py" />
     <Compile Include="Main.py" />

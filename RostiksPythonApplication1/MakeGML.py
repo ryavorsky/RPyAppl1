@@ -1,7 +1,7 @@
 print('Hello World')
 
 def ageColor(age):
-    if age[0:5] == 'До 25' :
+    if age[0:5] == '?? 25' :
         return '#FFFFA0'
     elif age[3:5] == '25' :
         return '#CCFF70'
