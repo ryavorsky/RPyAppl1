@@ -30,11 +30,24 @@
     <Compile Include="BuildGraphs.py" />
     <Compile Include="BuildHtml.py" />
     <Compile Include="MakeGML.py" />
+    <Compile Include="Try1.py" />
     <Compile Include="ProcessCSV.py" />
     <Compile Include="WriteFiles.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
+    <Content Include="Tex\Result.tex" />
+    <Content Include="Tex\slide4a.tex" />
+    <Content Include="Tex\slide4b.tex" />
+    <Content Include="Tex\slide5_1a.tex" />
+    <Content Include="Tex\slide5_1b.tex" />
+    <Content Include="Tex\slide5_2a.tex" />
+    <Content Include="Tex\slide5_2b.tex" />
+    <Content Include="Tex\slide5_3.tex" />
+    <Content Include="Tex\title.tex" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Tex\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
 </Project>
