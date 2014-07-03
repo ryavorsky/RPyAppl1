@@ -3,14 +3,14 @@
 # The inputDir should countain the data files
 # The outputDir will be created (with timestamp to avoid clushes)
 
-inputDir = 'c:\\Direktor\\Input\\1'
-outputDir = 'c:\\Direktor\\Output\\1'
+inputDir = 'c:\\Direktor\\Input\\2'
+outputDir = 'c:\\Direktor\\Output\\2'
 
 import CheckFolders
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
 import ProcessCSV
-ProcessCSV.readData(inputDir + '\\38408_table1.csv' )
+# ProcessCSV.readData(inputDir + '\\38408_table1.csv' )
 
 # Create resulting reports
 

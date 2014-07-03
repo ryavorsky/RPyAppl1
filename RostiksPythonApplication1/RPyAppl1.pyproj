@@ -23,16 +23,15 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BuildDot.py" />
-    <Compile Include="CheckFolders.py" />
-    <Compile Include="class1.py" />
+    <Compile Include="Lib\BuildDot.py" />
+    <Compile Include="Lib\CheckFolders.py" />
     <Compile Include="Main.py" />
-    <Compile Include="BuildGraphs.py" />
-    <Compile Include="BuildHtml.py" />
-    <Compile Include="MakeGML.py" />
-    <Compile Include="Try1.py" />
-    <Compile Include="ProcessCSV.py" />
-    <Compile Include="WriteFiles.py" />
+    <Compile Include="Lib\BuildGraphs.py" />
+    <Compile Include="Lib\BuildHtml.py" />
+    <Compile Include="Lib\MakeGML.py" />
+    <Compile Include="Lib\Try1.py" />
+    <Compile Include="Lib\ProcessCSV.py" />
+    <Compile Include="Lib\WriteFiles.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
@@ -47,6 +46,7 @@
     <Content Include="Tex\title.tex" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Lib\" />
     <Folder Include="Tex\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.Common.targets" />
