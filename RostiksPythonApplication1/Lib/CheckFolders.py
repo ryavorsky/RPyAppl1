@@ -1,8 +1,7 @@
 # Check whether the input/output folders exist
-
 import sys
-import os
 import time
+import os
 
 def TestDirs(inDir, outDir):
     try:
@@ -15,14 +14,14 @@ def TestDirs(inDir, outDir):
         inputFiles = os.listdir(inDir)
         print(str(len(inputFiles)) + ' files to process')
         for inputFileName in inputFiles:
-            print('\t' + inputFileName + '\n')
+            print '\t' + inputFileName
 
-    try: 
-        os.mkdir(outDir)
-        print('The output folder is created:\n\t' + outDir + '\n')
-    except Exception:
+    if os.path.exists(outDir): 
         t = time.localtime()
         outDir = outDir + '_' + str(t[3]) + str(t[4]) + str(t[5])
+        os.mkdir(outDir)
+        print('The output folder is created:\n\t' + outDir + '\n')
+    else:
         os.mkdir(outDir)
         print('The output folder is created:\n\t' + outDir + '\n')
 

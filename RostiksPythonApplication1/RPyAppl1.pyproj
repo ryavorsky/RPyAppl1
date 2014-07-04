@@ -7,8 +7,7 @@
     <ProjectHome>
     </ProjectHome>
     <StartupFile>Main.py</StartupFile>
-    <SearchPath>
-    </SearchPath>
+    <SearchPath>Lib</SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>RPyAppl1</Name>
@@ -23,15 +22,11 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Lib\BuildDot.py" />
     <Compile Include="Lib\CheckFolders.py" />
     <Compile Include="Main.py" />
     <Compile Include="Lib\BuildGraphs.py" />
-    <Compile Include="Lib\BuildHtml.py" />
-    <Compile Include="Lib\MakeGML.py" />
     <Compile Include="Lib\Try1.py" />
-    <Compile Include="Lib\ProcessCSV.py" />
-    <Compile Include="Lib\WriteFiles.py" />
+    <Compile Include="Lib\ParseInput.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />

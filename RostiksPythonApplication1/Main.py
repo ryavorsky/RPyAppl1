@@ -3,14 +3,24 @@
 # The inputDir should countain the data files
 # The outputDir will be created (with timestamp to avoid clushes)
 
+import sys
+import time
+import os
+import CheckFolders
+import BuildGraphs
+import ParseInput
+
 inputDir = 'c:\\Direktor\\Input\\2'
 outputDir = 'c:\\Direktor\\Output\\2'
 
-import CheckFolders
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
-import ProcessCSV
-# ProcessCSV.readData(inputDir + '\\38408_table1.csv' )
+for inputFileName in os.listdir(inputDir):
+
+    [inputId, subFolder, graphData] = ParseInput.dataFromFile(inputDir + '\\' + inputFileName, outputDir)
+    graphObject = BuildGraphs.makeGraph(graphData)
+    BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
+
 
 # Create resulting reports
 
