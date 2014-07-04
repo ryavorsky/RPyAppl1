@@ -6,6 +6,8 @@
 import sys
 import time
 import os
+import subprocess
+
 import CheckFolders
 import BuildGraphs
 import ParseInput
@@ -22,6 +24,8 @@ for inputFileName in os.listdir(inputDir):
     graphObject = BuildGraphs.makeGraph(graphData)
     BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
     BuildTex.MoveFiles(subFolder)
+    os.chdir(subFolder)
+    subprocess.call(('pdflatex', subFolder + '\\Result.tex'))
 
 
 # Create resulting reports
