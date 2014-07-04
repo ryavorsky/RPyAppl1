@@ -9,6 +9,7 @@ import os
 import CheckFolders
 import BuildGraphs
 import ParseInput
+import BuildTex
 
 inputDir = 'c:\\Direktor\\Input\\2'
 outputDir = 'c:\\Direktor\\Output\\2'
@@ -20,6 +21,7 @@ for inputFileName in os.listdir(inputDir):
     [inputId, subFolder, graphData] = ParseInput.dataFromFile(inputDir + '\\' + inputFileName, outputDir)
     graphObject = BuildGraphs.makeGraph(graphData)
     BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
+    BuildTex.MoveFiles(subFolder)
 
 
 # Create resulting reports
