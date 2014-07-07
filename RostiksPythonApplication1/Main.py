@@ -7,14 +7,15 @@ import sys
 import time
 import os
 import subprocess
+import shutil
 
 import CheckFolders
 import ParseInput
 import BuildGraphs
 import BuildTex
 
-inputDir = 'c:\\Direktor\\Input\\4'
-outputDir = 'c:\\Direktor\\Output\\4'
+inputDir = 'c:\\Direktor\\Input\\all'
+outputDir = 'c:\\Direktor\\Output\\all'
 
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
@@ -34,6 +35,7 @@ for inputFileName in os.listdir(inputDir):
     print '\nProcessing Result.tex in ', subFolder
     os.chdir(subFolder)
     subprocess.call(['pdflatex', '-quiet', 'Result.tex'])
+    shutil.copy2('Result.pdf', outputDir + '\\Res'+inputId+'.pdf')
     print inputFileName, ': the resulting PDF is created!'
 
 # Done! Now can speak to the world

@@ -6,7 +6,7 @@ import pylab as plt
 import random
 
 def makeGraphObject(socioData):
-    G = nx.Graph()
+    G = nx.DiGraph()
 
     for nodeData in socioData:
 
@@ -24,36 +24,66 @@ def makeGraphObject(socioData):
 
 def vizualizeGraph(inputId, subFolder, G):
 
-    G_all = aGraphObject(G)
-    G_all.draw(subFolder + '\\graph.png', prog='neato')
+    G4a = aGraphObject(G, [4,8], 'green')
+    G4a.draw(subFolder + '\\graph4a.png', prog='neato')
 
-    G0 = aGraphObject(G, [4,8], 'green')
-    G0.draw(subFolder + '\\graph0.png', prog='neato')
+    G4b = aSymGraphObject(G, [4,8], 'darkgreen')
+    G4b.draw(subFolder + '\\graph4b.png', prog='neato')
 
-    G1 = aGraphObject(G, [5,7], 'blue')
-    G1.draw(subFolder + '\\graph1.png', prog='neato')
+    G51a = aGraphObject(G, [5,7], 'cyan')
+    G51a.draw(subFolder + '\\graph5_1a.png', prog='neato')
 
-    G2 = aGraphObject(G, [3,6], 'cyan')
-    G2.draw(subFolder + '\\graph2.png', prog='neato')
+    G51b = aSymGraphObject(G, [5,7], 'blue')
+    G51b.draw(subFolder + '\\graph5_1b.png', prog='neato')
 
-    G3 = aGraphObject(G, [3,5,6,7], 'black')
-    G3.draw(subFolder + '\\graph3.png', prog='neato')
+    G52a = aGraphObject(G, [3,6], 'orange')
+    G52a.draw(subFolder + '\\graph5_2a.png', prog='neato')
+
+    G52b = aSymGraphObject(G, [3,6], 'red')
+    G52b.draw(subFolder + '\\graph5_2b.png', prog='neato')
+
+    G53 = aGraphObject(G, [3,5,6,7], 'yellow')
+    G53.draw(subFolder + '\\graph5_3.png', prog='neato')
 
 
 
-def aGraphObject(G, types = [], color = 'grey') :
+
+def aGraphObject(G_in, types = [], color = 'black') :
  
-    G1 = nx.to_agraph(G)
-    G1.graph_attr.update(splines='true', overlap='false')
-    for edge in G1.edges() :
+    G = nx.to_agraph(G_in)
+    G.graph_attr.update(splines='true', overlap='false')
+
+    for edge in G.edges() :
         edge.attr['len'] = '5'
+        edge.attr['color'] = 'lightgrey'
+
+    for edge in G.edges() :
         type = int(edge.attr['type'])
         if  types.count(type) > 0:
             edge.attr['style'] = 'bold'
             edge.attr['color'] = color
-        else :
-            edge.attr['color'] = 'lightgrey'
-    return G1
+
+    return G
+
+def aSymGraphObject(G_in, types, color = 'black') :
+ 
+    G = nx.to_agraph(G_in)
+    G.graph_attr.update(splines='true', overlap='false')
+
+    for edge in G.edges() :
+        edge.attr['len'] = '5'
+        edge.attr['color'] = 'lightgrey'
+
+    for edge in G.edges() :
+        type1 = int(edge.attr['type'])
+        (a,b) = edge
+        if G.has_edge(b,a):
+            type2 = int(G.get_edge(b,a).attr['type'])
+            if (types.count(type1) > 0) & (types.count(type2) > 0) & (a<b):
+                edge.attr['style'] = 'bold'
+                edge.attr['color'] = color
+    return G
+
 
 def nodeColor(age):
     # compute color of the graph node according to the age

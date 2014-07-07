@@ -8,11 +8,13 @@ def dataFromFile(inputFileName, outputFolder):
     os.mkdir(subFolder)
     print subFolder, ' is created for ', inputId
 
-    resFileName =  subFolder + '\\res_' + inputId + '.txt'
+    resFileName =  subFolder + '\\names.tex'
     f_in = open(inputFileName, 'r')
     f_out = open(resFileName, 'w')
 
     socioData = []
+
+    MakeTitle(f_in.readline(), subFolder + '\\title.tex')
 
     for line in  f_in:
         
@@ -28,7 +30,8 @@ def dataFromFile(inputFileName, outputFolder):
 
                 socioData.append([ id, name, age, edgeGroups ])
 
-                f_out.write(str([ id, age, edgeGroups ]) + '\n')
+                resLine = '\item [' + id + '] ' + name + '\n'
+                f_out.write(resLine.decode("CP1251").encode("UTF-8"))
 
     f_in.close()
     f_out.close()
@@ -65,3 +68,10 @@ def extractEdges(str):
     print 'Edge Groups size ', len(edgeGroups)
     return edgeGroups
         
+def MakeTitle(str, fileName) :
+    f = open(fileName, 'w')
+    data = str.split('\t')
+    res = '\\title[' + data[0] + '] {' + data[1] + '}'
+    print fileName, res
+    f.write(res.decode("CP1251").encode("UTF-8"))
+    f.close()
