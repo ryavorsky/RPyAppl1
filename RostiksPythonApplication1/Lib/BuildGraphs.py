@@ -23,48 +23,36 @@ def makeGraphObject(socioData):
     return G
 
 def vizualizeGraph(inputId, subFolder, G):
+
     G_all = aGraphObject(G)
-    for edge in G_all.edges() :
-        edge.attr['color'] = 'lightgrey'
     G_all.draw(subFolder + '\\graph.png', prog='neato')
 
-    G0 = aGraphObject(G)
-    for edge in G0.edges() :
-        type = int(edge.attr['type'])
-        if  type == 4 or type == 8:
-            edge.attr['style'] = 'bold'
-            edge.attr['color'] = 'green'
-        else :
-            edge.attr['color'] = 'lightgrey'
+    G0 = aGraphObject(G, [4,8], 'green')
     G0.draw(subFolder + '\\graph0.png', prog='neato')
 
-    G1 = aGraphObject(G)
-    for edge in G1.edges() :
-        type = int(edge.attr['type'])
-        if  type == 5 or type == 7:
-            edge.attr['style'] = 'bold'
-            edge.attr['color'] = 'blue'
-        else :
-            edge.attr['color'] = 'lightgrey'
+    G1 = aGraphObject(G, [5,7], 'blue')
     G1.draw(subFolder + '\\graph1.png', prog='neato')
 
-    G2 = aGraphObject(G)
-    for edge in G2.edges() :
-        type = int(edge.attr['type'])
-        if  type == 3 or type == 6:
-            edge.attr['style'] = 'bold'
-            edge.attr['color'] = 'cyan'
-        else :
-            edge.attr['color'] = 'lightgrey'
+    G2 = aGraphObject(G, [3,6], 'cyan')
     G2.draw(subFolder + '\\graph2.png', prog='neato')
 
+    G3 = aGraphObject(G, [3,5,6,7], 'black')
+    G3.draw(subFolder + '\\graph3.png', prog='neato')
 
 
-def aGraphObject(G) :
+
+def aGraphObject(G, types = [], color = 'grey') :
+ 
     G1 = nx.to_agraph(G)
     G1.graph_attr.update(splines='true', overlap='false')
     for edge in G1.edges() :
         edge.attr['len'] = '5'
+        type = int(edge.attr['type'])
+        if  types.count(type) > 0:
+            edge.attr['style'] = 'bold'
+            edge.attr['color'] = color
+        else :
+            edge.attr['color'] = 'lightgrey'
     return G1
 
 def nodeColor(age):
