@@ -5,52 +5,67 @@ import networkx as nx
 import pylab as plt
 import random
 
-def makeGraph(graphData):
+def makeGraphObject(socioData):
     G = nx.Graph()
-    for nodeData in graphData:
+
+    for nodeData in socioData:
 
         [id, name, age, edgeGroups] = nodeData
 
         G.add_node(id, age=age, shape = nodeShape(age), style='filled', fillcolor = nodeColor(age))
 
-        groupColor = {0:'blue', 1:'yellow', 2:'green', 3:'black', 4:'brown', 5:'cyan', 6:'yellow', 7:'pink', 8:'red'}
+        for groupNo in range(9) :      # there are 9 groups of links
+            for target in edgeGroups[groupNo]:
+                G.add_edge(id, target, type=groupNo)
 
-        groupNo = 0
-        for group in edgeGroups:
-            for j in group:
-                G.add_edge(id, j, type=groupNo, color = groupColor[groupNo])
-            groupNo += 1
     print 'The graph nodes'
     print '\n'.join(map(str,G.nodes(data = True)))
     return G
 
 def vizualizeGraph(inputId, subFolder, G):
+    G_all = aGraphObject(G)
+    for edge in G_all.edges() :
+        edge.attr['color'] = 'lightgrey'
+    G_all.draw(subFolder + '\\graph.png', prog='neato')
+
+    G0 = aGraphObject(G)
+    for edge in G0.edges() :
+        type = int(edge.attr['type'])
+        if  type == 4 or type == 8:
+            edge.attr['style'] = 'bold'
+            edge.attr['color'] = 'green'
+        else :
+            edge.attr['color'] = 'lightgrey'
+    G0.draw(subFolder + '\\graph0.png', prog='neato')
+
+    G1 = aGraphObject(G)
+    for edge in G1.edges() :
+        type = int(edge.attr['type'])
+        if  type == 5 or type == 7:
+            edge.attr['style'] = 'bold'
+            edge.attr['color'] = 'blue'
+        else :
+            edge.attr['color'] = 'lightgrey'
+    G1.draw(subFolder + '\\graph1.png', prog='neato')
+
+    G2 = aGraphObject(G)
+    for edge in G2.edges() :
+        type = int(edge.attr['type'])
+        if  type == 3 or type == 6:
+            edge.attr['style'] = 'bold'
+            edge.attr['color'] = 'cyan'
+        else :
+            edge.attr['color'] = 'lightgrey'
+    G2.draw(subFolder + '\\graph2.png', prog='neato')
+
+
+
+def aGraphObject(G) :
     G1 = nx.to_agraph(G)
     G1.graph_attr.update(splines='true', overlap='false')
-
     for edge in G1.edges() :
         edge.attr['len'] = '5'
-
-    G1.draw(subFolder + '\\graph.png', prog='neato')
-
-    for i in range(2) :
-        G2 = nx.to_agraph(G)
-        G2.graph_attr.update(splines='true', overlap='false')
-
-        random.seed(i)
-        for node in G2.nodes() :
-            size = random.choice([0.3, 0.4, 0.5])
-            node.attr['height']=size
-            node.attr['width']=size
-
-        for edge in G2.edges() :
-            edge.attr['len'] = '5'
-            if int(edge.attr['type']) == i :
-                edge.attr['style'] = 'bold'
-            else :
-                edge.attr['color'] = 'lightgrey'
-        G2.draw(subFolder + '\\graph' + str(i) + '.png', prog='neato')
-
+    return G1
 
 def nodeColor(age):
     # compute color of the graph node according to the age

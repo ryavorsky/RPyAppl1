@@ -9,33 +9,31 @@ def dataFromFile(inputFileName, outputFolder):
     print subFolder, ' is created for ', inputId
 
     resFileName =  subFolder + '\\res_' + inputId + '.txt'
+    f_in = open(inputFileName, 'r')
     f_out = open(resFileName, 'w')
 
-    f_in = open(inputFileName, 'r')
-    f_in.readline() 
-
-    graphData = []
+    socioData = []
 
     for line in  f_in:
         
         seq =  line.split('\t') #  Id - LocalId - full name - answers - comment
 
-        if (len(seq)>3):
+        if (len(seq)>3): # exclude lines with comments
             if (len(seq[3])) > 20: # the answers
                 id = seq[1]
                 name = seq[2]
                 dataString = seq[3].replace('" ','"') 
                 age = extractAge(dataString)
-                edgeGroups = extractEdges(dataString)
+                edgeGroups = extractEdges(dataString) # nine sequences of edge targets for the nine questions
 
-                graphData.append([ id, name, age, edgeGroups ])
+                socioData.append([ id, name, age, edgeGroups ])
 
                 f_out.write(str([ id, age, edgeGroups ]) + '\n')
 
     f_in.close()
     f_out.close()
 
-    return [inputId,subFolder, graphData]
+    return [inputId,subFolder, socioData]
 
 
 # extracxt age of the respondee
@@ -51,14 +49,19 @@ def extractEdges(str):
 
     edgeGroups = [] #list of lists of pairs
     
-    seq1 = str.split('Q_6') # search for Q_60, Q_61, Q_61, ...
-    
-    for i in range(len(seq1) - 1):
-        edges = [] # list of pairs 
-        for str1 in seq1[i+1].split(';'):
-            if len(str1) > 9:
-                edges.append(str1.replace('s:5:','').replace('\"',''))
-        edgeGroups.append(edges)
+    seq = str.split('Q_6') # search for Q_60, Q_61, Q_61, ... and split
 
+    for i in range(len(seq) - 1):   
+        edgeTargets = [] # list of edge targets 
+        for s in seq[i+1].split(';'):
+            if len(s) > 9:
+                target = s.replace('s:5:','').replace('s:4:','').replace('\"','')
+                edgeTargets.append(target)
+        edgeGroups.append(edgeTargets)
+    
+    if len(edgeGroups) == 8 :
+        edgeGroups.insert(1,[])
+
+    print 'Edge Groups size ', len(edgeGroups)
     return edgeGroups
         

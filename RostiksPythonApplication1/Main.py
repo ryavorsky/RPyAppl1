@@ -22,21 +22,22 @@ for inputFileName in os.listdir(inputDir):
 
     print '\n Processing input file ' + inputFileName
 
-    [inputId, subFolder, graphData] = ParseInput.dataFromFile(inputDir + '\\' + inputFileName, outputDir)
+    [inputId, subFolder, socioData] = ParseInput.dataFromFile(inputDir + '\\' + inputFileName, outputDir)
 
     # Create graphics for the reports 
-    graphObject = BuildGraphs.makeGraph(graphData)
+    graphObject = BuildGraphs.makeGraphObject(socioData)
     BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
 
     # Create resulting reports
-    BuildTex.MoveFiles(subFolder)
-    os.chdir(subFolder)
+    BuildTex.MoveFiles(subFolder) # First, move the Tex files to the subfolder 
+
     print '\nProcessing Result.tex in ', subFolder
+    os.chdir(subFolder)
     subprocess.call(['pdflatex', '-quiet', 'Result.tex'])
-    print inputFileName, ': done!'
+    print inputFileName, ': the resulting PDF is created!'
 
 # Done! Now can speak to the world
-print('\nSee the results in ' + outputDir)
+print('\nSee the final results in ' + outputDir)
 
 a = []
 
