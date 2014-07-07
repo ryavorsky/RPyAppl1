@@ -1,35 +1,39 @@
 import os
 
-def dataFromFile(inputFileName, otputFolder):
+def dataFromFile(inputFileName, outputFolder):
 
-    f1 = open(inputFileName, 'r')
-    f1.readline()
-
+    # extract input file Id and create folder for the results
     inputId = os.path.basename(inputFileName).split('.')[0].split('_')[1]
-    subFolder = otputFolder + '\\' + inputId + '_files'
+    subFolder = outputFolder + '\\' + inputId + '_files'
     os.mkdir(subFolder)
+    print subFolder, ' is created for ', inputId
 
     resFileName =  subFolder + '\\res_' + inputId + '.txt'
-    print subFolder, '--', inputId
-    f2 = open(resFileName, 'w')
+    f_out = open(resFileName, 'w')
+
+    f_in = open(inputFileName, 'r')
+    f_in.readline() 
+
     graphData = []
 
-    for line in  f1:
+    for line in  f_in:
         
         seq =  line.split('\t') #  Id - LocalId - full name - answers - comment
 
-        if len(seq[3]) > 20:
+        if (len(seq)>3):
+            if (len(seq[3])) > 20: # the answers
+                id = seq[1]
+                name = seq[2]
+                dataString = seq[3].replace('" ','"') 
+                age = extractAge(dataString)
+                edgeGroups = extractEdges(dataString)
 
-            id = seq[1]
-            name = seq[2]
-            age = extractAge(seq[3])
-            edgeGroups = extractEdges(seq[3])
+                graphData.append([ id, name, age, edgeGroups ])
 
-            graphData.append([ id, name, age, edgeGroups ])
-            f2.write(str(graphData))
+                f_out.write(str([ id, age, edgeGroups ]) + '\n')
 
-    f1.close()
-    f2.close()
+    f_in.close()
+    f_out.close()
 
     return [inputId,subFolder, graphData]
 

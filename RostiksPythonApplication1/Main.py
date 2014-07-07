@@ -9,39 +9,34 @@ import os
 import subprocess
 
 import CheckFolders
-import BuildGraphs
 import ParseInput
+import BuildGraphs
 import BuildTex
 
-inputDir = 'c:\\Direktor\\Input\\2'
-outputDir = 'c:\\Direktor\\Output\\2'
+inputDir = 'c:\\Direktor\\Input\\4'
+outputDir = 'c:\\Direktor\\Output\\4'
 
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
 for inputFileName in os.listdir(inputDir):
 
+    print '\n Processing input file ' + inputFileName
+
     [inputId, subFolder, graphData] = ParseInput.dataFromFile(inputDir + '\\' + inputFileName, outputDir)
+
+    # Create graphics for the reports 
     graphObject = BuildGraphs.makeGraph(graphData)
     BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
+
+    # Create resulting reports
     BuildTex.MoveFiles(subFolder)
     os.chdir(subFolder)
-    subprocess.call(('pdflatex', subFolder + '\\Result.tex'))
-
-
-# Create resulting reports
-
-#import WriteFiles
-#WriteFiles.writeTestFiles(outputDir)
-
-#import BuildHtml
-#BuildHtml.writeHtmlReport(outputDir, 'testRes.htm')
-
-# Create graphics for the reports 
-
-#import BuildGraphs
-#BuildGraphs.testDiagram(outputDir)
-
+    print '\nProcessing Result.tex in ', subFolder
+    subprocess.call(['pdflatex', '-quiet', 'Result.tex'])
+    print inputFileName, ': done!'
 
 # Done! Now can speak to the world
+print('\nSee the results in ' + outputDir)
 
-print('Hello World!\n See the results in ' + outputDir)
+a = []
+

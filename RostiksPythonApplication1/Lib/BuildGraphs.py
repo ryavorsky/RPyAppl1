@@ -6,29 +6,23 @@ import pylab as plt
 import random
 
 def makeGraph(graphData):
-    Gr = nx.Graph()
-    for data in graphData:
-        [id,name,age,edgeGroups] = data
-        k = (age - 25.0)/50.0
-        R = int(193 + k*(160 - 193))
-        G = int(253 + k*(160 - 253))
-        B = int(205 + k*(254 - 205))
-        RGB = '#' + format(R, '02x') + format(G, '02x') + format(B, '02x')
-        print age, k, R, G, B, RGB
-        if age < 46 :
-            shape = 'diamond'
-        else :
-            shape = 'box'
-        Gr.add_node(id, age=age, shape = shape, style='filled', fillcolor = RGB)
+    G = nx.Graph()
+    for nodeData in graphData:
+
+        [id, name, age, edgeGroups] = nodeData
+
+        G.add_node(id, age=age, shape = nodeShape(age), style='filled', fillcolor = nodeColor(age))
+
+        groupColor = {0:'blue', 1:'yellow', 2:'green', 3:'black', 4:'brown', 5:'cyan', 6:'yellow', 7:'pink', 8:'red'}
 
         groupNo = 0
-        groupColor = {0:'blue', 1:'yellow', 2:'green', 3:'black', 4:'brown', 5:'cyan', 6:'yellow', 7:'pink', 8:'red'}
         for group in edgeGroups:
             for j in group:
-                Gr.add_edge(id, j, type=groupNo, color = groupColor[groupNo])
+                G.add_edge(id, j, type=groupNo, color = groupColor[groupNo])
             groupNo += 1
-    print Gr.nodes(data = True)
-    return Gr
+    print 'The graph nodes'
+    print '\n'.join(map(str,G.nodes(data = True)))
+    return G
 
 def vizualizeGraph(inputId, subFolder, G):
     G1 = nx.to_agraph(G)
@@ -37,7 +31,7 @@ def vizualizeGraph(inputId, subFolder, G):
     for edge in G1.edges() :
         edge.attr['len'] = '5'
 
-    G1.draw(subFolder + '\\graph1.png', prog='neato')
+    G1.draw(subFolder + '\\graph.png', prog='neato')
 
     for i in range(2) :
         G2 = nx.to_agraph(G)
@@ -58,6 +52,26 @@ def vizualizeGraph(inputId, subFolder, G):
         G2.draw(subFolder + '\\graph' + str(i) + '.png', prog='neato')
 
 
+def nodeColor(age):
+    # compute color of the graph node according to the age
+    k = (age - 30.0)/30.0
+    if k < 0 :
+        k = 0
+    if k > 1 :
+        k = 1
+    R = int(193 + k*(160 - 193))
+    G = int(253 + k*(160 - 253))
+    B = int(205 + k*(254 - 205))
+    RGB = '#' + format(R, '02x') + format(G, '02x') + format(B, '02x')
+
+    return RGB
+
+
+def nodeShape(age):
+    if age < 46 :
+        return 'diamond'
+    else :
+        return 'box'
 
 def testDiagram(folder):
     # example data
