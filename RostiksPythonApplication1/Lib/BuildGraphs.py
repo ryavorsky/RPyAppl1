@@ -10,40 +10,52 @@ def makeGraphObject(socioData):
 
     for nodeData in socioData:
 
-        [id, name, age, edgeGroups] = nodeData
+        [id, localId, name, age, edgeGroups] = nodeData
 
-        G.add_node(id, age=age, shape = nodeShape(age), style='filled', fillcolor = nodeColor(age))
+        G.add_node(id, number=localId, age=age, shape = 'circle', style='filled', fillcolor = nodeColor(age))
 
         for groupNo in range(9) :      # there are 9 groups of links
             for target in edgeGroups[groupNo]:
                 G.add_edge(id, target, type=groupNo)
 
-    print 'The graph nodes'
-    print '\n'.join(map(str,G.nodes(data = True)))
+    print 'Graph object is cteated. The graph nodes'
+    print '\n', G.nodes(data = True)
     return G
 
 def vizualizeGraph(inputId, subFolder, G):
 
+    print 'Building ', subFolder + '\\graph4a.png'
     G4a = aGraphObject(G, [4,8], 'green')
-    G4a.draw(subFolder + '\\graph4a.png', prog='neato')
+    G4a.layout(prog='neato')
+    for node in G4a.nodes() :
+        node.attr['label'] = node.attr['number']
+    G4a.draw(subFolder + '\\graph4a.png')
 
+    print 'Building ', subFolder + '\\graph4b.png'
     G4b = aSymGraphObject(G, [4,8], 'darkgreen')
-    G4b.draw(subFolder + '\\graph4b.png', prog='neato')
+    G4b.layout(prog='neato')
+    for node in G4b.nodes() :
+        node.attr['label'] = node.attr['number']
+    for edge in G4b.edges():
+        if edge.attr['color'] == 'lightgrey' :
+            G4b.remove_edge(edge)
+    G4b.layout(prog='neato')
+    G4b.draw(subFolder + '\\graph4b.png')
 
-    G51a = aGraphObject(G, [5,7], 'cyan')
-    G51a.draw(subFolder + '\\graph5_1a.png', prog='neato')
+    #G51a = aGraphObject(G, [5,7], 'cyan')
+    #G51a.draw(subFolder + '\\graph5_1a.png', prog='dot')
 
-    G51b = aSymGraphObject(G, [5,7], 'blue')
-    G51b.draw(subFolder + '\\graph5_1b.png', prog='neato')
+    #G51b = aSymGraphObject(G, [5,7], 'blue')
+    #G51b.draw(subFolder + '\\graph5_1b.png', prog='dot')
 
-    G52a = aGraphObject(G, [3,6], 'orange')
-    G52a.draw(subFolder + '\\graph5_2a.png', prog='neato')
+    #G52a = aGraphObject(G, [3,6], 'orange')
+    #G52a.draw(subFolder + '\\graph5_2a.png', prog='dot')
 
-    G52b = aSymGraphObject(G, [3,6], 'red')
-    G52b.draw(subFolder + '\\graph5_2b.png', prog='neato')
+    #G52b = aSymGraphObject(G, [3,6], 'red')
+    #G52b.draw(subFolder + '\\graph5_2b.png', prog='dot')
 
-    G53 = aGraphObject(G, [3,5,6,7], 'yellow')
-    G53.draw(subFolder + '\\graph5_3.png', prog='neato')
+    #G53 = aGraphObject(G, [3,5,6,7], 'yellow')
+    #G53.draw(subFolder + '\\graph5_3.png', prog='dot')
 
 
 
@@ -101,6 +113,7 @@ def nodeColor(age):
 
 
 def nodeShape(age):
+    return 'circle'
     if age < 46 :
         return 'diamond'
     else :

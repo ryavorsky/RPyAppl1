@@ -8,12 +8,15 @@ def dataFromFile(inputFileName, outputFolder):
     os.mkdir(subFolder)
     print subFolder, ' is created for ', inputId
 
+    # initialize all
     resFileName =  subFolder + '\\names.tex'
     f_in = open(inputFileName, 'r')
     f_out = open(resFileName, 'w')
 
     socioData = []
+    localId = 0
 
+    # use the first line to build title.tex
     MakeTitle(f_in.readline(), subFolder + '\\title.tex')
 
     for line in  f_in:
@@ -23,14 +26,15 @@ def dataFromFile(inputFileName, outputFolder):
         if (len(seq)>3): # exclude lines with comments
             if (len(seq[3])) > 20: # the answers
                 id = seq[1]
+                localId += 1
                 name = seq[2]
                 dataString = seq[3].replace('" ','"') 
                 age = extractAge(dataString)
                 edgeGroups = extractEdges(dataString) # nine sequences of edge targets for the nine questions
 
-                socioData.append([ id, name, age, edgeGroups ])
+                socioData.append([ id, str(localId), name, age, edgeGroups ])
 
-                resLine = '\item [' + id + '] ' + name + '\n'
+                resLine = '\item [' + str(localId) + '] ' + name + '\n'
                 f_out.write(resLine.decode("CP1251").encode("UTF-8"))
 
     f_in.close()
