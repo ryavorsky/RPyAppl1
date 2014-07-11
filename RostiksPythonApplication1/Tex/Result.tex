@@ -3,20 +3,57 @@
 
 \documentclass{beamer}
 \usetheme{Boadilla}
-\usenavigationsymbolstemplate{}
+
 \usepackage[english,russian]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{times}
 
+\newcommand{\docId}{Отчёт}
+\newcommand{\theAuthor}{\textcopyright  АНО ``Образовательный квартал'' 2014 год}
+
+
+\makeatother
+\setbeamertemplate{footline}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{doc number}%
+    \usebeamerfont{}\insertshorttitle
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.7\paperwidth,ht=2.25ex,dp=1ex,center]{doc comment}%
+    \usebeamerfont{}\theAuthor\hspace*{3em}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.1\paperwidth,ht=2.25ex,dp=1ex,center]{doc comment}%
+    \insertframenumber{} \hspace*{1ex}
+  \end{beamercolorbox}}%
+  \vskip0pt%
+}
+\makeatletter
+\setbeamertemplate{navigation symbols}{}
+
+
+\usenavigationsymbolstemplate{}
 \input{title.tex}
 
-\author{Июнь-август 2014}
-\institute[Тюмень]{ Москва - Тюмень}
-\date{\textcopyright АНО ДПО ОЦ «ОК» }
+\subtitle{Анализ педагогического состава учебного заведения 
+на основе проведенного анкетирования}
+
+\author{}
+\institute{}
+\date{}
 
 \begin{document}
 \begin{frame}
   \titlepage
+\end{frame}
+
+\begin{frame}{Список сотрудников (номер, ф. и. о, должность)}
+
+\begin{itemize}
+\fontsize{3pt}{4}\selectfont
+\input{names.tex}
+\end{itemize}
+
 \end{frame}
 
 \input{slide4a.tex}

@@ -12,8 +12,10 @@ def dataFromFile(inputFileName, outputFolder):
     resFileName =  subFolder + '\\names.tex'
     f_in = open(inputFileName, 'r')
     f_out = open(resFileName, 'w')
+  
 
     socioData = []
+    statData = []
     localId = 0
 
     # use the first line to build title.tex
@@ -43,13 +45,6 @@ def dataFromFile(inputFileName, outputFolder):
     return [inputId,subFolder, socioData]
 
 
-# extracxt age of the respondee
-def extractAge(str):
-    yearInd = str.find(':"19') + 2
-    year = str[ yearInd : (yearInd+4) ]
-    age = 2014 - int(year)
-    return age
-
 
 # extract connections for the current respondee
 def extractEdges(str):
@@ -75,7 +70,15 @@ def extractEdges(str):
 def MakeTitle(str, fileName) :
     f = open(fileName, 'w')
     data = str.split('\t')
-    res = '\\title[' + data[0].replace('OrgId=','Report \No 2014-T-') + '] {' + data[1].replace('quot;','') + '}'
+    res = '\\title[' + data[0].replace('OrgId=','\docId\  \No\  T-') + '] {' + data[1].replace('quot;','') + '}'
     print fileName, res
     f.write(res.decode("CP1251").encode("UTF-8"))
     f.close()
+
+    
+# extracxt age of the respondee
+def extractAge(str):
+    yearInd = str.find(':"19') + 2
+    year = str[ yearInd : (yearInd+4) ]
+    age = 2014 - int(year)
+    return age
