@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
+import math
 import networkx as nx
 import pylab as plt
 import random
@@ -12,11 +13,12 @@ def makeGraphObject(socioData):
 
         [id, localId, name, age, edgeGroups] = nodeData
 
-        G.add_node(id, number=localId, age=age, shape = 'circle', style='filled', fillcolor = nodeColor(age))
+
+        G.add_node(id, number=localId, shape = 'circle', style='filled', fillcolor = 'white', width = '0.8')
 
         for groupNo in range(9) :      # there are 9 groups of links
             for target in edgeGroups[groupNo]:
-                G.add_edge(id, target, type=groupNo)
+                G.add_edge(id, target, type=groupNo, len='4', color = 'lightgrey')
 
     print 'Graph object is cteated. The graph nodes'
     print '\n', G.nodes(data = True)
@@ -25,66 +27,57 @@ def makeGraphObject(socioData):
 def vizualizeGraph(inputId, subFolder, G):
 
     print 'Building ', subFolder + '\\graph4a.png'
-    G4a = aGraphObject(G, [4,8], 'green')
-    G4a.layout(prog='neato')
-    for node in G4a.nodes() :
-        node.attr['label'] = node.attr['number']
+    G4a = aGraphObject(G, [4,8], 'darkgreen')
     G4a.draw(subFolder + '\\graph4a.png')
 
     print 'Building ', subFolder + '\\graph4b.png'
-    G4b = aSymGraphObject(G, [4,8], 'darkgreen')
-    G4b.layout(prog='neato')
-    for node in G4b.nodes() :
-        node.attr['label'] = node.attr['number']
-    for edge in G4b.edges():
-        if edge.attr['color'] == 'lightgrey' :
-            G4b.remove_edge(edge)
-    G4b.layout(prog='neato')
+    G4b = aSymGraphObject(G, [4,8], 'blue')
     G4b.draw(subFolder + '\\graph4b.png')
 
-    #G51a = aGraphObject(G, [5,7], 'cyan')
-    #G51a.draw(subFolder + '\\graph5_1a.png', prog='dot')
+    G51a = aGraphObject(G, [5,7], 'cyan')
+    G51a.draw(subFolder + '\\graph5_1a.png')
 
-    #G51b = aSymGraphObject(G, [5,7], 'blue')
-    #G51b.draw(subFolder + '\\graph5_1b.png', prog='dot')
+    G51b = aSymGraphObject(G, [5,7], 'blue')
+    G51b.draw(subFolder + '\\graph5_1b.png')
 
-    #G52a = aGraphObject(G, [3,6], 'orange')
-    #G52a.draw(subFolder + '\\graph5_2a.png', prog='dot')
+    G52a = aGraphObject(G, [3,6], 'orange')
+    G52a.draw(subFolder + '\\graph5_2a.png')
 
-    #G52b = aSymGraphObject(G, [3,6], 'red')
-    #G52b.draw(subFolder + '\\graph5_2b.png', prog='dot')
+    G52b = aSymGraphObject(G, [3,6], 'red')
+    G52b.draw(subFolder + '\\graph5_2b.png')
 
-    #G53 = aGraphObject(G, [3,5,6,7], 'yellow')
-    #G53.draw(subFolder + '\\graph5_3.png', prog='dot')
+    G53 = aGraphObject(G, [3,5,6,7], 'yellow')
+    G53.draw(subFolder + '\\graph5_3.png')
 
-
-
-
+# format and layout ordered sub-graph
 def aGraphObject(G_in, types = [], color = 'black') :
  
     G = nx.to_agraph(G_in)
-    G.graph_attr.update(splines='true', overlap='false')
-
-    for edge in G.edges() :
-        edge.attr['len'] = '5'
-        edge.attr['color'] = 'lightgrey'
+    G.graph_attr.update(splines='true', overlap='false', ratio='0.9', size='30')
 
     for edge in G.edges() :
         type = int(edge.attr['type'])
         if  types.count(type) > 0:
             edge.attr['style'] = 'bold'
             edge.attr['color'] = color
+        else :
+            G.remove_edge(edge)
+
+    for node in G.nodes() :
+        node.attr['width'] = 0.4 + 0.1*(G.in_degree(node))
+
+    G = makeLayout(G)
+
+    for node in G.nodes() :
+        node.attr['label'] = node.attr['number']
 
     return G
 
+# the similar for the symmetric part
 def aSymGraphObject(G_in, types, color = 'black') :
  
     G = nx.to_agraph(G_in)
-    G.graph_attr.update(splines='true', overlap='false')
-
-    for edge in G.edges() :
-        edge.attr['len'] = '5'
-        edge.attr['color'] = 'lightgrey'
+    G.graph_attr.update(splines='true', overlap='scale', ratio='0.9', size='30')
 
     for edge in G.edges() :
         type1 = int(edge.attr['type'])
@@ -94,6 +87,39 @@ def aSymGraphObject(G_in, types, color = 'black') :
             if (types.count(type1) > 0) & (types.count(type2) > 0) & (a<b):
                 edge.attr['style'] = 'bold'
                 edge.attr['color'] = color
+                edge.attr['dir'] = 'both'
+
+    for edge in G.edges() :
+        if edge.attr['color'] == 'lightgrey' :
+            G.remove_edge(edge)
+
+    for node in G.nodes() :
+        w = 0.3*(G.in_degree(node) + G.out_degree(node))
+        w =  0.4 + int(w*10)/10.0
+        print w
+        node.attr['width'] = str(w)
+
+    G = makeLayout(G)
+
+    for node in G.nodes() :
+        node.attr['label'] = node.attr['number']
+        if (G.out_degree(node) == 0) & (G.in_degree(node) == 0) :
+            G.remove_node(node)
+
+    for node in G.nodes() :
+        print 'Degree', G.in_degree(node), G.out_degree(node), 'width', node.attr['width'] 
+
+    return G
+
+
+def makeLayout(G, params = '') :
+    try :
+        G.layout(prog='neato', args=params)
+    except Exception:
+        try :
+            G.layout(prog='fdp', args = params)
+        except Exception:
+                G.layout(prog='circo', args = params)
     return G
 
 

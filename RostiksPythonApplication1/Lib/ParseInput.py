@@ -75,7 +75,7 @@ def extractEdges(str):
 def MakeTitle(str, fileName) :
     f = open(fileName, 'w')
     data = str.split('\t')
-    res = '\\title[' + data[0] + '] {' + data[1] + '}'
+    res = '\\title[' + data[0].replace('OrgId=','Report \No 2014-T-') + '] {' + data[1].replace('quot;','') + '}'
     print fileName, res
     f.write(res.decode("CP1251").encode("UTF-8"))
     f.close()
