@@ -20,34 +20,36 @@ def makeGraphObject(socioData):
             for target in edgeGroups[groupNo]:
                 G.add_edge(id, target, type=groupNo, len='4', color = 'lightgrey')
 
-    print 'Graph object is cteated. The graph nodes'
-    print '\n', G.nodes(data = True)
+    print '\nGraph object is cteated. The graph nodes'
+    for node in G.nodes(data = True) :
+        print '\t', node
     return G
 
 def vizualizeGraph(inputId, subFolder, G):
 
-    print 'Building ', subFolder + '\\graph4a.png'
+    print '\nBuilding ', subFolder + '\\graph4a.png'
     G4a = aGraphObject(G, [4,8], 'darkgreen')
     G4a.draw(subFolder + '\\graph4a.png')
 
-    print 'Building ', subFolder + '\\graph4b.png'
+    print '\nBuilding ', subFolder + '\\graph4b.png'
     G4b = aSymGraphObject(G, [4,8], 'blue')
     G4b.draw(subFolder + '\\graph4b.png')
-
-    G51a = aGraphObject(G, [5,7], 'cyan')
-    G51a.draw(subFolder + '\\graph5_1a.png')
 
     G51b = aSymGraphObject(G, [5,7], 'blue')
     G51b.draw(subFolder + '\\graph5_1b.png')
 
+    G52b = aSymGraphObject(G, [3,6], 'red')
+    G52b.draw(subFolder + '\\graph5_2b.png')
+'''
+    G51a = aGraphObject(G, [5,7], 'cyan')
+    G51a.draw(subFolder + '\\graph5_1a.png')
+
     G52a = aGraphObject(G, [3,6], 'orange')
     G52a.draw(subFolder + '\\graph5_2a.png')
 
-    G52b = aSymGraphObject(G, [3,6], 'red')
-    G52b.draw(subFolder + '\\graph5_2b.png')
-
     G53 = aGraphObject(G, [3,5,6,7], 'yellow')
     G53.draw(subFolder + '\\graph5_3.png')
+'''
 
 # format and layout ordered sub-graph
 def aGraphObject(G_in, types = [], color = 'black') :
@@ -96,7 +98,7 @@ def aSymGraphObject(G_in, types, color = 'black') :
     for node in G.nodes() :
         w = 0.3*(G.in_degree(node) + G.out_degree(node))
         w =  0.4 + int(w*10)/10.0
-        print w
+        print node, 'degrees', G.in_degree(node), G.out_degree(node),' width ', w
         node.attr['width'] = str(w)
 
     G = makeLayout(G)
@@ -107,7 +109,7 @@ def aSymGraphObject(G_in, types, color = 'black') :
             G.remove_node(node)
 
     for node in G.nodes() :
-        print 'Degree', G.in_degree(node), G.out_degree(node), 'width', node.attr['width'] 
+        print '(Sym. final) Degree of', node, '-', G.in_degree(node), G.out_degree(node), 'width', node.attr['width'] 
 
     return G
 
