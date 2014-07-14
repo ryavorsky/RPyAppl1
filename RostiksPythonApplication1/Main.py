@@ -12,6 +12,7 @@ import shutil
 import CheckFolders
 import ParseInput
 import BuildGraphs
+import Charts
 import BuildTex
 
 inputDir = 'c:\\Direktor\\Input\\4'
@@ -28,6 +29,8 @@ for inputFileName in os.listdir(inputDir):
     # Create graphics for the reports 
     graphObject = BuildGraphs.makeGraphObject(socioData)
     BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
+
+    Charts.BuildChart(subFolder, [1,2,3,2,3,1,0,2,3,2,1,0])
 
     # Create resulting reports
     BuildTex.MoveFiles(subFolder) # First, move the Tex files to the subfolder 
