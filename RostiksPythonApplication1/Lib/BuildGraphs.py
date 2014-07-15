@@ -7,6 +7,7 @@ import pylab as plt
 import random
 
 def makeGraphObject(socioData):
+
     G = nx.DiGraph()
 
     for nodeData in socioData:
@@ -18,60 +19,68 @@ def makeGraphObject(socioData):
 
         for groupNo in range(9) :      # there are 9 groups of links
             for target in edgeGroups[groupNo]:
-                G.add_edge(id, target, type=groupNo, len='4', color = 'lightgrey')
+                G.add_edge(id, target, type=groupNo, color = 'lightgrey')
 
     print '\nGraph object is cteated. The graph nodes'
     for node in G.nodes(data = True) :
         print '\t', node
     return G
 
-def vizualizeGraph(inputId, subFolder, G):
+def vizualizeGraph(inputId, subFolder, G0):
 
     print '\nBuilding ', subFolder + '\\graph4a.png'
-    G4a = aGraphObject(G, [4,8], 'darkgreen')
+    G4a = aGraphObject(G0, [4,8], 'orange')
     G4a.draw(subFolder + '\\graph4a.png')
 
     print '\nBuilding ', subFolder + '\\graph4b.png'
-    G4b = aSymGraphObject(G, [4,8], 'blue')
+    G4b = aSymGraphObject(G0, [4,8], 'red')
     G4b.draw(subFolder + '\\graph4b.png')
 
-    G51b = aSymGraphObject(G, [5,7], 'blue')
-    G51b.draw(subFolder + '\\graph5_1b.png')
-
-    G52b = aSymGraphObject(G, [3,6], 'red')
-    G52b.draw(subFolder + '\\graph5_2b.png')
-'''
-    G51a = aGraphObject(G, [5,7], 'cyan')
+    G51a = aGraphObject(G0, [5,7], 'blue')
     G51a.draw(subFolder + '\\graph5_1a.png')
 
-    G52a = aGraphObject(G, [3,6], 'orange')
+    G51b = aSymGraphObject(G0, [5,7], '#808080')
+    G51b.draw(subFolder + '\\graph5_1b.png')
+
+    G52a = aGraphObject(G0, [3,6], 'darkgreen')
     G52a.draw(subFolder + '\\graph5_2a.png')
 
-    G53 = aGraphObject(G, [3,5,6,7], 'yellow')
+    G52b = aSymGraphObject(G0, [3,6], 'darkgreen')
+    G52b.draw(subFolder + '\\graph5_2b.png')
+
+    G53 = aGraphObject(G0, [3,5,6,7], '#448888')
     G53.draw(subFolder + '\\graph5_3.png')
-'''
+
 
 # format and layout ordered sub-graph
-def aGraphObject(G_in, types = [], color = 'black') :
- 
-    G = nx.to_agraph(G_in)
-    G.graph_attr.update(splines='true', overlap='false', ratio='0.9', size='30')
+def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
 
-    for edge in G.edges() :
-        type = int(edge.attr['type'])
+    G0 = nx.DiGraph()
+
+    for node in G_in.nodes() :
+        lbl = G_in.node[node]['number']
+        G0.add_node(node, number = lbl, fontsize = 32, fixedsize='true') # , shape='circle'
+    
+    for (u,v) in G_in.edges() :
+        type = int(G_in[u][v]['type'])
         if  types.count(type) > 0:
-            edge.attr['style'] = 'bold'
-            edge.attr['color'] = color
-        else :
-            G.remove_edge(edge)
+            G0.add_edge(u,v, style = 'bold', color = color, minlen='3')
+
+    G = nx.to_agraph(G0)
+    G.graph_attr.update(splines='true', overlap='false', ratio='fill', size='21,21')
 
     for node in G.nodes() :
-        node.attr['width'] = 0.4 + 0.1*(G.in_degree(node))
+        size = 0.7 + 0.1*(G.in_degree(node))
+        node.attr['width'] = size
+        node.attr['height'] = size
 
-    G = makeLayout(G)
+    G = makeLayout(G, layout)
 
     for node in G.nodes() :
         node.attr['label'] = node.attr['number']
+        if node.attr['number'] == '1' :
+            node.attr['style'] = 'filled'
+            node.attr['fillcolor'] = '#FFFAAA'
 
     return G
 
@@ -79,7 +88,7 @@ def aGraphObject(G_in, types = [], color = 'black') :
 def aSymGraphObject(G_in, types, color = 'black') :
  
     G = nx.to_agraph(G_in)
-    G.graph_attr.update(splines='true', overlap='scale', ratio='0.9', size='30')
+    G.graph_attr.update(splines='true', overlap='false', ratio='fill', size='15,15')
 
     for edge in G.edges() :
         type1 = int(edge.attr['type'])
@@ -90,6 +99,8 @@ def aSymGraphObject(G_in, types, color = 'black') :
                 edge.attr['style'] = 'bold'
                 edge.attr['color'] = color
                 edge.attr['dir'] = 'both'
+                edge.attr['minlen'] = '3'
+
 
     for edge in G.edges() :
         if edge.attr['color'] == 'lightgrey' :
@@ -100,6 +111,8 @@ def aSymGraphObject(G_in, types, color = 'black') :
         w =  0.4 + int(w*10)/10.0
         print node, 'degrees', G.in_degree(node), G.out_degree(node),' width ', w
         node.attr['width'] = str(w)
+        node.attr['fontsize'] = '32'
+        node.attr['fixedsize'] = 'true'
 
     G = makeLayout(G)
 
@@ -107,6 +120,9 @@ def aSymGraphObject(G_in, types, color = 'black') :
         node.attr['label'] = node.attr['number']
         if (G.out_degree(node) == 0) & (G.in_degree(node) == 0) :
             G.remove_node(node)
+        if node.attr['number'] == '1' :
+            node.attr['style'] = 'filled'
+            node.attr['fillcolor'] = '#FFFAAA'
 
     for node in G.nodes() :
         print '(Sym. final) Degree of', node, '-', G.in_degree(node), G.out_degree(node), 'width', node.attr['width'] 
@@ -114,14 +130,20 @@ def aSymGraphObject(G_in, types, color = 'black') :
     return G
 
 
-def makeLayout(G, params = '') :
+def makeLayout(G, layout = 'neato', params = '') :
     try :
-        G.layout(prog='neato', args=params)
+        G.layout(prog=layout, args=params)
     except Exception:
         try :
             G.layout(prog='fdp', args = params)
         except Exception:
-                G.layout(prog='circo', args = params)
+            try :
+                G.layout(prog='neato', args = params)
+            except Exception:
+                try :
+                    G.layout(prog='twopi', args = params)
+                except Exception:
+                    print 'Layout failed '
     return G
 
 

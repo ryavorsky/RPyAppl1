@@ -15,8 +15,8 @@ import BuildGraphs
 import Charts
 import BuildTex
 
-inputDir = 'c:\\Direktor\\Input\\4'
-outputDir = 'c:\\Direktor\\Output\\4'
+inputDir = 'c:\\Direktor\\Input\\1'
+outputDir = 'c:\\Direktor\\Output\\1'
 
 outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
