@@ -27,3 +27,15 @@ def TestDirs(inDir, outDir):
 
     return outDir
 
+# Dictionary of russian keywords
+mytext = dict()
+
+def initialize() :
+    f = open('Dict.txt','r')
+    for line in f.readlines() :
+        v = line.split(' -> ')
+        #print line, v
+        if len(v) > 1 :
+            mytext[v[0]] = v[1].decode("CP1251").encode("UTF-8")
+    print mytext
+    f.close()
