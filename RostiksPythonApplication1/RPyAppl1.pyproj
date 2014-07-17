@@ -32,6 +32,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="README.md" />
+    <Content Include="Dict.txt" />
     <Content Include="Tex\Result.tex" />
     <Content Include="Tex\slide4a.tex" />
     <Content Include="Tex\slide4b.tex" />
