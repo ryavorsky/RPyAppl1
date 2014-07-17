@@ -1,15 +1,12 @@
 import os
 
-def dataFromFile(inputFileName, outputFolder):
+def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
 
-    # extract input file Id and create folder for the results
+    # extract input file Id 
     inputId = os.path.basename(inputFileName).split('.')[0].split('_')[1]
     subFolder = outputFolder + '\\' + inputId + '_files'
-    os.mkdir(subFolder)
-    print subFolder, ' is created for ', inputId
-
-    # initialize all
-    resFileName =  subFolder + '\\names.tex'
+    
+    resFileName =  subFolder + '\\names.tex' # Teacher names to be included in report
     f_in = open(inputFileName, 'r')
     f_title = open(resFileName, 'w')
     f_data = open(subFolder + '\\data.txt', 'w')
@@ -23,7 +20,8 @@ def dataFromFile(inputFileName, outputFolder):
     print 'Parse input initialized'
 
     # use the first line to build title.tex
-    MakeTitle(f_in.readline(), subFolder + '\\title.tex')
+    firstLine = f_in.readline()
+    MakeTitle(firstLine, subFolder)
 
     for line in  f_in:
         
@@ -74,7 +72,7 @@ def dataFromFile(inputFileName, outputFolder):
     f_data.close()
 
     socioData = []
-    return [inputId, subFolder, graphData, socioData]
+    return [graphData, socioData]
 
 
 
@@ -98,14 +96,22 @@ def extractEdges(s0):
 
     print 'Edge groups size ', len(edgeGroups), 'parsed for', s0[0:32] + '...'
     return edgeGroups
-        
-def MakeTitle(str, fileName) :
-    f = open(fileName, 'w')
-    data = str.split('\t')
-    res = '\\title[' + data[0].replace('OrgId=','\docId\  \No\  T-') + '] {' + data[1].replace('quot;','') + '}'
-    f.write(res.decode("CP1251").encode("UTF-8"))
-    f.close()
 
+
+def MakeTitle(firstLine, subFolder) :
+
+    [orgId, orgName] = firstLine.split('\t')
+
+    orgName.replace('quot;','')
+    orgName =  orgName.decode("CP1251").encode("UTF-8")
+
+    orgId = orgId.split('=')[1]
+
+    fName = subFolder + '\\commands.tex'
+    fileOfTexCommands = open(fName, 'a')
+    fileOfTexCommands.write('\\newcommand{\\fullName}{' + orgName + '}\n')
+    fileOfTexCommands.write('\\newcommand{\\internalId}{' + orgId + '}\n')
+    fileOfTexCommands.close()
     
 # extracxt age of the respondee
 def extractAge(str):

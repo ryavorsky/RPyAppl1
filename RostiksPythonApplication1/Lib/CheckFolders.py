@@ -27,6 +27,16 @@ def TestDirs(inDir, outDir):
 
     return outDir
 
+def MakeSubfolder(inputFileName, outputDir) :
+    # extract input file Id and create folder for the results
+    inputId = os.path.basename(inputFileName).split('.')[0].split('_')[1]
+    subFolder = outputDir + '\\' + inputId + '_files'
+    os.mkdir(subFolder)
+    print subFolder, ' is created for ', inputId
+    return [inputId, subFolder]
+
+
+
 # Dictionary of russian keywords
 mytext = dict()
 
