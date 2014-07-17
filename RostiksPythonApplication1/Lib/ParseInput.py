@@ -15,7 +15,7 @@ def dataFromFile(inputFileName, outputFolder):
     f_data = open(subFolder + '\\data.txt', 'w')
   
 
-    socioData = []
+    graphData = []
     statData = dict()
     for i in range(9,60) :
         statData['q' + str(i)] = []
@@ -38,7 +38,7 @@ def dataFromFile(inputFileName, outputFolder):
                 age = extractAge(dataString)
                 edgeGroups = extractEdges(dataString) # nine sequences of edge targets for the nine questions
 
-                socioData.append([ id, str(localId), name, age, edgeGroups ])
+                graphData.append([ id, str(localId), name, age, edgeGroups ])
 
                 resLine = '\item [' + str(localId) + '] ' + name + '\n'
                 f_title.write(resLine.decode("CP1251").encode("UTF-8"))
@@ -73,7 +73,7 @@ def dataFromFile(inputFileName, outputFolder):
     f_title.close()
     f_data.close()
 
-    return [inputId, subFolder, socioData]
+    return [inputId, subFolder, graphData]
 
 
 
