@@ -1,6 +1,10 @@
 from pylab import *
 import matplotlib.pyplot as plt
 
+def BuildAllCharts(subFolder, socioData):
+    print '\nBuilding charts in', subFolder, 'from', socioData
+    return
+
 def BuildChart(subFolder, dataList, values = []) :
     figure(1, figsize=(5,5))
     axes([0.01, 0.01, 0.99, 0.99])

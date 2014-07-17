@@ -73,7 +73,8 @@ def dataFromFile(inputFileName, outputFolder):
     f_title.close()
     f_data.close()
 
-    return [inputId, subFolder, graphData]
+    socioData = []
+    return [inputId, subFolder, graphData, socioData]
 
 
 

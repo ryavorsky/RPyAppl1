@@ -1,5 +1,5 @@
-import os
 # Standard libraries
+import os
 import subprocess
 import shutil
 
@@ -15,26 +15,22 @@ def makeReport(inputFileName, outputDir):
     print '\n Processing input file ' + inputFileName
 
     # Parse the input file and create the subfolder for all the related files
-    [inputId, subFolder, graphData] = ParseInput.dataFromFile(inputFileName, outputDir)
+    [inputId, subFolder, graphData, socioData] = ParseInput.dataFromFile(inputFileName, outputDir)
 
     # Process the input data to create charts, graphs, Tex and then PDF
     try :
         # Create graphs for the reports 
         graphObject = BuildGraphs.makeGraphObject(graphData)
+        BuildGraphs.BuildAllGraphs(inputId, subFolder, graphObject)
 
-        BuildGraphs.vizualizeGraph(inputId, subFolder, graphObject)
+        # Create charts and histograms for the reports 
+        BuildCharts.BuildAllCharts(subFolder, socioData)
 
         # Move the prefilled Tex files into the subfolder
         BuildTex.MoveFiles(subFolder)  
 
         # Create PDF
-        print '\nProcessing Result.tex in ', subFolder
-        os.chdir(subFolder)
-        subprocess.call(['pdflatex', '-quiet', 'Result.tex'])
-
-        # Copy the final report from the subfolder into the output folder to all reports
-        shutil.copy2('Result.pdf', outputDir + '\\Res'+inputId+'.pdf')
-        print '\nThe resulting PDF is created for', inputFileName
+        BuildTex.CreatePdf(outputDir, subFolder, inputId, inputFileName)
 
     except Exception:
         print 'Creating PDF failed for ', inputId

@@ -26,7 +26,7 @@ def makeGraphObject(socioData):
         print '\t', node
     return G
 
-def vizualizeGraph(inputId, subFolder, G0):
+def BuildAllGraphs(inputId, subFolder, G0):
 
     print '\nBuilding ', subFolder + '\\graph4a.png'
     G4a = aGraphObject(G0, [4,8], 'orange')
