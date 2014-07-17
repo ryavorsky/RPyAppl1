@@ -18,7 +18,7 @@
   \leavevmode%
   \hbox{%
   \begin{beamercolorbox}[wd=.2\paperwidth,ht=2.25ex,dp=1ex,center]{doc number}%
-    \usebeamerfont{}\insertshorttitle
+    \usebeamerfont{}\docId\  \No\  T-\internalId
   \end{beamercolorbox}%
   \begin{beamercolorbox}[wd=.7\paperwidth,ht=2.25ex,dp=1ex,center]{doc comment}%
     \usebeamerfont{}\theAuthor\hspace*{3em}
@@ -33,8 +33,6 @@
 
 
 \usenavigationsymbolstemplate{}
-\input{title.tex}
-
 \subtitle{Анализ педагогического состава учебного заведения 
 на основе проведенного анкетирования}
 
@@ -43,18 +41,10 @@
 \date{}
 
 \begin{document}
-\begin{frame}
-  \titlepage
-\end{frame}
 
-\begin{frame}{Список сотрудников (номер, ф. и. о, должность)}
-
-\begin{itemize}
-\fontsize{3pt}{4}\selectfont
-\input{names.tex}
-\end{itemize}
-
-\end{frame}
+\input{title.tex}
+\input{slide1a.tex}
+\input{slide1b.tex}
 
 \input{slide4a.tex}
 \input{slide4b.tex}

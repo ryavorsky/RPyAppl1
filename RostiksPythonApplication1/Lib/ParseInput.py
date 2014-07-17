@@ -6,7 +6,7 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     inputId = os.path.basename(inputFileName).split('.')[0].split('_')[1]
     subFolder = outputFolder + '\\' + inputId + '_files'
     
-    resFileName =  subFolder + '\\names.tex' # Teacher names to be included in report
+    resFileName =  subFolder + '\\nameslist.tex' # Teacher names to be included in report
     f_in = open(inputFileName, 'r')
     f_title = open(resFileName, 'w')
     f_data = open(subFolder + '\\data.txt', 'w')
@@ -21,7 +21,7 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
 
     # use the first line to build title.tex
     firstLine = f_in.readline()
-    MakeTitle(firstLine, subFolder)
+    MakeTitlePage(firstLine, subFolder)
 
     for line in  f_in:
         
@@ -98,7 +98,7 @@ def extractEdges(s0):
     return edgeGroups
 
 
-def MakeTitle(firstLine, subFolder) :
+def MakeTitlePage(firstLine, subFolder) :
 
     [orgId, orgName] = firstLine.split('\t')
 
