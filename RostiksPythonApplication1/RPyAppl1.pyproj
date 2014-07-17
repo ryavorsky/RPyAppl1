@@ -24,10 +24,10 @@
   <ItemGroup>
     <Compile Include="Lib\BuildTex.py" />
     <Compile Include="Lib\CheckFolders.py" />
-    <Compile Include="Lib\Charts.py" />
+    <Compile Include="Lib\BuildCharts.py" />
+    <Compile Include="Lib\BuildAll.py" />
     <Compile Include="Main.py" />
     <Compile Include="Lib\BuildGraphs.py" />
-    <Compile Include="Lib\Try1.py" />
     <Compile Include="Lib\ParseInput.py" />
   </ItemGroup>
   <ItemGroup>

@@ -34,17 +34,16 @@ def YesNoPieChart(fileName, yesNum = 11, noNum = 5) :
     savefig(fileName)
     close(1)
 
-
+# Building histogram from two raws of data classifies by several categories
 def YesNoHist(fileName, yesData = [0,1,2,1,1], noData = [1,2,0,2], cat = ['A','B','C']) :
      
-    # print 'Building yes-no bars:', data, ' cat:', cat
     fig = figure(1)
     left,bottom,width,height= 0.1 , 0.1, 0.85, 0.85
     axes([left,bottom,width,height])
-    colors=['#FF0000','#00FF00']
+    colors=['#FF0000','#00FF00'] # red for 'no', green for 'yes'
     catNum = len(cat)
     n, bins, patches = hist([noData, yesData], range(catNum + 1), histtype='bar', stacked=False, color=colors)
-    m = [max(n[0][i], n[1][i]) for i in range(len(cat))]
+    m = [max(n[0][i], n[1][i]) for i in range(len(cat))] # compute the 
     print n, m
     xticks([i+0.5 for i in range(catNum)], cat)
     yticks([i for i in range(max(m)+2)])
@@ -52,7 +51,7 @@ def YesNoHist(fileName, yesData = [0,1,2,1,1], noData = [1,2,0,2], cat = ['A','B
     close(1)
 
 
-def YesNoByAge(fileName, data = [['no',28],['no',28],['yes',28],['yes',56],['yes',54],['no',37]]):
+def YesNoHistByAge(fileName, data = [['no',28],['no',28],['yes',28],['yes',56],['yes',54],['no',37]]):
 
     yesData = []
     noData = []
@@ -75,7 +74,8 @@ def YesNoByAge(fileName, data = [['no',28],['no',28],['yes',28],['yes',56],['yes
 
     YesNoHist(fileName, yesData, noData, cat)
 
-def YesNoByCategory(fileName, data = [['yes',0],['no',2],['yes',2],['yes',2],['yes',1],['no',3],['yes',4]]) :
+# Use the previous function to build diagram from not so refined data
+def YesNoHistByTeacherCat(fileName, data = [['yes',0],['no',2],['yes',2],['yes',2],['yes',1],['no',3],['yes',4]]) :
     yesData = []
     noData = []
     cat = ['HET AT.', 'ATTECT.', '2 KAT', '1 KAT','B. KAT']
