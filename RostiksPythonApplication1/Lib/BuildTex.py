@@ -21,3 +21,13 @@ def CreatePdf(outputDir, subFolder, inputId, inputFileName) :
     shutil.copy2('Result.pdf', outputDir + '\\Res'+inputId+'.pdf')
 
     print '\nThe resulting PDF is created for', inputFileName
+
+def addMacros(subFolder, command, value) :
+
+    print 'Macros:', subFolder, command, value
+    fName = subFolder + '\\commands.tex'
+    fileOfTexCommands = open(fName, 'a')
+    line = '\\newcommand{\\' + command +'}{' + str(value) + '}\n'
+    fileOfTexCommands.write(line)
+    fileOfTexCommands.close()
+    print 'Tex command added', '\\newcommand{\\' + command +'}{' + value + '}\n'

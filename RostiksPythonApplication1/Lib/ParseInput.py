@@ -1,4 +1,5 @@
 import os
+import BuildTex
 
 def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
 
@@ -8,18 +9,21 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     
     resFileName =  subFolder + '\\nameslist.tex' # Teacher names to be included in report
     f_in = open(inputFileName, 'r')
-    f_title = open(resFileName, 'w')
+    f_namelist = open(resFileName, 'w')
     f_data = open(subFolder + '\\data.txt', 'w')
   
-
     graphData = []
-    statData = dict()
+    statData = []
+
+    statDataDict = dict()
     for i in range(9,60) :
-        statData['q' + str(i)] = []
-    localId = 0
+        statDataDict['q' + str(i)] = []
+    localId = 0 # id of a peson in his orhanization
+
+
     print 'Parse input initialized'
 
-    # use the first line to build title.tex
+    # use the first line of the input file to build title page
     firstLine = f_in.readline()
     MakeTitlePage(firstLine, subFolder)
 
@@ -27,7 +31,7 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
         
         seq =  line.split('\t') #  Id - LocalId - full name - answers - comment
 
-        if (len(seq)>3): # exclude lines with comments
+        if (len(seq)>3): # exclude lines with no data
             if (len(seq[3])) > 20: # the answers
                 id = seq[1]
                 localId += 1
@@ -38,9 +42,11 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
 
                 graphData.append([ id, str(localId), name, age, edgeGroups ])
 
+                # Save the name list into the Tex file
                 resLine = '\item [' + str(localId) + '] ' + name + '\n'
-                f_title.write(resLine.decode("CP1251").encode("UTF-8"))
+                f_namelist.write(resLine.decode("CP1251").encode("UTF-8"))
 
+                # Now extract the statistical data
                 data = seq[3]
                 data = data.replace('s:1:','').replace('s:2:','').replace('s:3:','').replace('s:4:','').replace('s:5:','').replace('s:6:','').replace('s:7:','').replace('s:8:','')
                 data = data.replace('i:0;','').replace('i:1;','').replace('i:2;','').replace('i:3;','').replace('i:4;','').replace('i:5;','')
@@ -49,6 +55,8 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
                 ln = data.find('q6') - 2
                 data = data[7:ln]
                 data = data.replace('"','')
+
+                statData.append(data)
 
                 f_data.write( data + '\n')
 
@@ -59,20 +67,18 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
                         s = data[p_start:(p_start+100)].split('\t')[0]
                         s = s.split('=')[1]
                         if s.find('{') == -1 :
-                            statData[q]= statData[q] + [s]
-                            f_data.write( s + '\n')
+                            statDataDict[q]= statDataDict[q] + [s]
     
-    print '\nStat data'
-    for i in range(9,60) :
-        q = 'q' + str(i)
-        print '\t', q, ' => ', statData[q]
+    print '\nStat data', statData
 
     f_in.close()
-    f_title.close()
+    f_namelist.close()
     f_data.close()
 
-    socioData = []
-    return [graphData, socioData]
+    # Save the number of participated
+    BuildTex.addMacros(subFolder, 'nParticipated', str(len(graphData)))
+
+    return [graphData, statData]
 
 
 
@@ -98,20 +104,17 @@ def extractEdges(s0):
     return edgeGroups
 
 
+# Extract organization full name and Id
 def MakeTitlePage(firstLine, subFolder) :
 
     [orgId, orgName] = firstLine.split('\t')
 
     orgName.replace('quot;','')
     orgName =  orgName.decode("CP1251").encode("UTF-8")
+    BuildTex.addMacros(subFolder,'fullName', orgName)
 
     orgId = orgId.split('=')[1]
-
-    fName = subFolder + '\\commands.tex'
-    fileOfTexCommands = open(fName, 'a')
-    fileOfTexCommands.write('\\newcommand{\\fullName}{' + orgName + '}\n')
-    fileOfTexCommands.write('\\newcommand{\\internalId}{' + orgId + '}\n')
-    fileOfTexCommands.close()
+    BuildTex.addMacros(subFolder,'internalId', orgId)
     
 # extracxt age of the respondee
 def extractAge(str):

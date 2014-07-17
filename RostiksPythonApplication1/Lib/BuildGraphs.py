@@ -6,11 +6,13 @@ import networkx as nx
 import pylab as plt
 import random
 
-def makeGraphObject(socioData):
+import BuildTex
+
+def makeGraphObject(graphData):
 
     G = nx.DiGraph()
 
-    for nodeData in socioData:
+    for nodeData in graphData:
 
         [id, localId, name, age, edgeGroups] = nodeData
 
@@ -21,12 +23,16 @@ def makeGraphObject(socioData):
             for target in edgeGroups[groupNo]:
                 G.add_edge(id, target, type=groupNo, color = 'lightgrey')
 
-    print '\nGraph object is cteated. The graph nodes'
+    print '\nGraph object is created. The graph nodes'
     for node in G.nodes(data = True) :
         print '\t', node
+
     return G
 
 def BuildAllGraphs(inputId, subFolder, G0):
+
+    # Save the number of employee into the Tex file
+    BuildTex.addMacros(subFolder, 'nTotal', str(len(G0.nodes())))
 
     print '\nBuilding ', subFolder + '\\graph4a.png'
     G4a = aGraphObject(G0, [4,8], 'orange')
