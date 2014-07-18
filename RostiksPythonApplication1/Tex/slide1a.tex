@@ -5,21 +5,21 @@
 
 
 \begin{itemize}
-\item Количество административных и педагогических работников – nTotal.
-\item Количество заполнивших анкету – nParticipated.
-\item Административные работники – nAdmin.
-\item Педагогические работники – nPed.
+\item Количество административных и педагогических работников – \nTotal.
+\item Количество заполнивших анкету – \nParticipated.
+\item Административные работники – \numBoss.
+\item Педагогические работники – \numTeacher.
 \item Пол \\
 \begin{tabular}{|c|c|} \hline
-Муж &  Жен \\ \hline
-s1     &   s2   \\ \hline
+мужчины &  женщины \\ \hline
+\numMen     &   \numWomen   \\ \hline
 \end{tabular}
 
 \item Возраст \\
 \noindent
 \begin{tabular}{|c|c|c|c|} \hline
 до 25 лет &  25 -- 35  лет &  36 -- 55 лет & свыше 55 лет \\ \hline
-a1     &   a2         &   a3        & a4 \\ \hline
+\numYoung     &   \numMidAge         &   \numSenior        & \numOld  \\ \hline
 \end{tabular}
 
 \item Образование
@@ -27,22 +27,22 @@ a1     &   a2         &   a3        & a4 \\ \hline
 \begin{tabular}{|c|c|c|c|c|c|c|} \hline
 Среднее  & Среднее  & Высшее    & Иное  & Послевузовское \\
 специальное & специальное & педагогическое & высшее & (аспирантура,\\
-(педагог.)       & (не педагог.)   & (спец., маг.,бак.) & &  докторантура) \\ \hline
-e1 & e2 & e3, e4, e5 & e6 & e7 \\ \hline
+(педагог.)       & (не педагог.)   & (спец., маг., бак.) & &  докторантура) \\ \hline
+\numEduA & \numEduB & \numEduC, \numEduD, \numEduE & \numEduF & \numEduG \\ \hline
 \end{tabular}
 
 \item Педагогический стаж \\
 \noindent
 \begin{tabular}{|c|c|c|c|} \hline
  до 5 лет &  6 -- 10 лет &  11 -- 20 лет & больше 20 лет \\ \hline
- s1    &   s2       &  s3         & s4 \\ \hline
+ \numExpA    &  \numExpB    & \numExpC & \numExpD \\ \hline
 \end{tabular}
 
 \item Стаж работы в данном образовательном учреждении \\
 \noindent
 \begin{tabular}{|c|c|c|c|} \hline
  до 5 лет &  6 -- 10  лет &  11 -- 20 лет & больше 20 лет \\ \hline
- u1    &   u2      &  u3        & u4 \\ \hline
+ \numExpHereA & \numExpHereB & \numExpHereC & \numExpHereD \\ \hline
 \end{tabular}
 
 \item Квалификационная категория \\
@@ -50,7 +50,7 @@ e1 & e2 & e3, e4, e5 & e6 & e7 \\ \hline
 \begin{tabular}{|c|c|c|c|c|} \hline
  Не  &  Аттестован & 2-я &  1-я  & Высшая \\ 
  сдавал &  на соотв. & категория &  категория  & категория \\ \hline
- k0 & k1    &   k2      &  k3        & k4 \\ \hline
+ \numTechCatA & \numTechCatB & \numTechCatC &  \numTechCatD &  \numTechCatE \\ \hline
 \end{tabular}
 
 \end{itemize}
