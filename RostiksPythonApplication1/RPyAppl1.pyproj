@@ -26,6 +26,7 @@
     <Compile Include="Lib\CheckFolders.py" />
     <Compile Include="Lib\BuildCharts.py" />
     <Compile Include="Lib\BuildAll.py" />
+    <Compile Include="Lib\StatValues3.py" />
     <Compile Include="Lib\StatValues2.py" />
     <Compile Include="Lib\StatValues.py" />
     <Compile Include="Main.py" />

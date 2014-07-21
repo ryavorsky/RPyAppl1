@@ -1,5 +1,6 @@
 import BuildTex
 import StatValues2
+import StatValues3
 
 def computeValues(subFolder, statData) :
 
@@ -12,6 +13,8 @@ def computeValues(subFolder, statData) :
     computeTeachCat(subFolder, statData)
 
     StatValues2.ComputeAll(subFolder, statData)
+
+    StatValues3.ComputeAll(subFolder, statData)
 
 def extractAnswers(statData, questionNumbers) :
     res = []
@@ -27,7 +30,7 @@ def extractAnswers(statData, questionNumbers) :
         else :
             res.append(ans)
 
-    print 'Extracted answers for', questionNumbers, res
+    print 'Extracted answers for', questionNumbers, ':\n', res
     return res
 
 def getAgeGroup(age) :
