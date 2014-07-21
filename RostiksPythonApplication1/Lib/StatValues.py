@@ -11,7 +11,7 @@ def computeValues(subFolder, statData) :
     computeWorkHereYears(subFolder, statData)
     computeTeachCat(subFolder, statData)
 
-    #StatValues
+    StatValues2.ComputeAll(subFolder, statData)
 
 def extractAnswers(statData, questionNumbers) :
     res = []
@@ -29,6 +29,16 @@ def extractAnswers(statData, questionNumbers) :
 
     print 'Extracted answers for', questionNumbers, res
     return res
+
+def getAgeGroup(age) :
+    if age < 25 :
+        return 0
+    elif age < 36 :
+        return 1
+    elif age < 56 :
+        return 2
+    else:
+        return 3 
 
 def computeManWomen(subFolder, statData) :
     values = extractAnswers(statData, [9])
