@@ -1,4 +1,5 @@
 import BuildTex
+import StatValues2
 
 def computeValues(subFolder, statData) :
 
@@ -9,6 +10,8 @@ def computeValues(subFolder, statData) :
     computeWorkYears(subFolder, statData)
     computeWorkHereYears(subFolder, statData)
     computeTeachCat(subFolder, statData)
+
+    #StatValues
 
 def extractAnswers(statData, questionNumbers) :
     res = []
@@ -43,7 +46,7 @@ def computeBossTeacher(subFolder) :
         pos = line.find(',')
         l = len(line) - pos
         print 'Boss:', pos, l, line
-        if l > 30  :
+        if l > 80  :
             boss += 1
         else :
             teacher += 1

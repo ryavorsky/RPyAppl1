@@ -37,7 +37,7 @@ def BuildAllGraphs(inputId, subFolder, G0):
     print '\nBuilding ', subFolder + '\\graph4a.png'
     G4a = aGraphObject(G0, [4,8], 'orange')
     G4a.draw(subFolder + '\\graph4a.png')
-    '''
+    
     G4b = aSymGraphObject(G0, [4,8], 'red')
     G4b.draw(subFolder + '\\graph4b.png')
 
@@ -55,7 +55,7 @@ def BuildAllGraphs(inputId, subFolder, G0):
 
     G53 = aGraphObject(G0, [3,5,6,7], '#448888')
     G53.draw(subFolder + '\\graph5_3.png')
-    '''
+    
 
 # format and layout ordered sub-graph
 def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
