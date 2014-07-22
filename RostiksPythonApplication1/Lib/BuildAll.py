@@ -40,7 +40,8 @@ def makeReport(inputFileName, outputDir):
         # Create PDF
         BuildTex.CreatePdf(outputDir, subFolder, inputId, inputFileName)
 
-    except Exception:
+    except Exception as e:
+        print e.message
         print 'Creating PDF failed for ', inputId
 
     print '\n', '*'*70, '\n', '-'*70, '\n'

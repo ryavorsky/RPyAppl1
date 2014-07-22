@@ -1,5 +1,7 @@
 from pylab import *
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+
 
 def BuildAllCharts(subFolder, socioData):
     print '\nBuilding charts in', subFolder, 'from', socioData
@@ -24,16 +26,42 @@ def BuildChart(subFolder, dataList, values = []) :
     savefig(subFolder + '\\pie3.png')
     close(1)
 
-def YesNoPieChart(fileName, yesNum = 11, noNum = 5) :
+def YesNoPie(fileName, yesNum = 11, noNum = 5) :
 
-    fig = figure(1, figsize=(5,5))
+    print '\nBuilding Yes/No pie:', yesNum, noNum, fileName
+    mpl.rcParams['font.size'] = 32.0
+    mpl.rcParams['font.family'] = 'Times New Roman'
+    fig = figure(1, figsize=(5.5,5.5))
 
     yes = int(yesNum * 100/(yesNum + noNum))
-    fracs = [yes, 100 - yes]
+    fracs = [100 - yes, yes]
     labels = [str(fracs[0]) + '%',str(fracs[1]) + '%']
 
-    colors=['#00FF00', '#FF0000' ]
+    if fracs[0] == 0 :
+        labels[0] = ''
+    if fracs[1] == 0 :
+        labels[1] = ''
 
+    colors=['#FF0000' ,'#00BB00']
+
+    pie(fracs, labels = labels, colors=colors, startangle=90)
+    savefig(fileName)
+    close(1)
+
+def Pie(fileName, data):
+    print '\nBuilding big pie for:', data, fileName
+    mpl.rcParams['font.size'] = 32.0
+    mpl.rcParams['font.family'] = 'Times New Roman'
+    fig = figure(1, figsize=(5.5,5.5))
+
+    s = 0.0
+    for val in data :
+        s = s + int(val)
+    print sum
+    fracs = [int(val*100.0/s) for val in data]
+    print fracs
+    labels = [str(p) + '%' for p in fracs ]
+    colors=['g','b','c','r']
     pie(fracs, labels = labels, colors=colors, startangle=90)
     savefig(fileName)
     close(1)

@@ -1,6 +1,7 @@
 # Statistics for chapter 3
 
 import BuildTex
+import BuildCharts
 import StatValues
 
 def ComputeAll(subFolder, statData):
@@ -28,6 +29,8 @@ def compute31a(subFolder, statData): # aggregate
     BuildTex.addMacros(subFolder, 'valCAAyesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valCAAnoNumP', str(noNumP))
 
+    BuildCharts.YesNoPie(subFolder + '\\pie311.png', yesNum, noNum)
+
 
 def compute31b(subFolder, statData): # by age - q14
     print '\nComputing values for slide 3.1.2.'
@@ -45,6 +48,11 @@ def compute31b(subFolder, statData): # by age - q14
     BuildTex.addMacros(subFolder, 'valCABnoNumB', str(noNum[1]))
     BuildTex.addMacros(subFolder, 'valCABnoNumC', str(noNum[2]))
     BuildTex.addMacros(subFolder, 'valCABnoNumD', str(noNum[3]))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie312a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder + '\\pie312b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder + '\\pie312c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder + '\\pie312d.png', yesNum[3], noNum[3])
 
 
 def compute31c(subFolder, statData): # by category - q19
@@ -66,6 +74,12 @@ def compute31c(subFolder, statData): # by category - q19
     BuildTex.addMacros(subFolder, 'valCACnoNumD', str(noNum[3]))
     BuildTex.addMacros(subFolder, 'valCACnoNumE', str(noNum[4]))
 
+    BuildCharts.YesNoPie(subFolder + '\\pie313a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder + '\\pie313b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder + '\\pie313c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder + '\\pie313d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder + '\\pie313e.png', yesNum[4], noNum[4])
+
 
 def compute32a(subFolder, statData): # aggregate
     print '\nComputing values for slide 3.2.1.'
@@ -80,6 +94,8 @@ def compute32a(subFolder, statData): # aggregate
     BuildTex.addMacros(subFolder, 'valCBAnoNum', str(noNum))
     BuildTex.addMacros(subFolder, 'valCBAyesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valCBAnoNumP', str(noNumP))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie321.png', yesNum, noNum)
 
 
 def compute32b(subFolder, statData): # by age - q14
@@ -98,6 +114,12 @@ def compute32b(subFolder, statData): # by age - q14
     BuildTex.addMacros(subFolder, 'valCBBnoNumB', str(noNum[1]))
     BuildTex.addMacros(subFolder, 'valCBBnoNumC', str(noNum[2]))
     BuildTex.addMacros(subFolder, 'valCBBnoNumD', str(noNum[3]))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie322a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder + '\\pie322b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder + '\\pie322c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder + '\\pie322d.png', yesNum[3], noNum[3])
+
 
 
 def compute32c(subFolder, statData): # by category - q19
@@ -119,6 +141,13 @@ def compute32c(subFolder, statData): # by category - q19
     BuildTex.addMacros(subFolder, 'valCBCnoNumD', str(noNum[3]))
     BuildTex.addMacros(subFolder, 'valCBCnoNumE', str(noNum[4]))
 
+    BuildCharts.YesNoPie(subFolder + '\\pie323a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder + '\\pie323b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder + '\\pie323c.png', yesNum[2], noNum[2])
+    BuildCharts.YesNoPie(subFolder + '\\pie323d.png', yesNum[3], noNum[3])
+    BuildCharts.YesNoPie(subFolder + '\\pie323e.png', yesNum[4], noNum[4])
+
+
 def compute32d(subFolder, statData): # by question
     print '\nComputing values for slide 3.2.4.'
     values = StatValues.extractAnswers(statData, [40,41,42])
@@ -133,3 +162,7 @@ def compute32d(subFolder, statData): # by question
     BuildTex.addMacros(subFolder, 'valCBDnoNumA', str(noNum[0]))
     BuildTex.addMacros(subFolder, 'valCBDnoNumB', str(noNum[1]))
     BuildTex.addMacros(subFolder, 'valCBDnoNumC', str(noNum[2]))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie324a.png', yesNum[0], noNum[0])
+    BuildCharts.YesNoPie(subFolder + '\\pie324b.png', yesNum[1], noNum[1])
+    BuildCharts.YesNoPie(subFolder + '\\pie324c.png', yesNum[2], noNum[2])
