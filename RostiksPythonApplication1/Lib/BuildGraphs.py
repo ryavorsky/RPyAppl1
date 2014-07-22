@@ -143,10 +143,10 @@ def makeLayout(G, layout = 'neato', params = '') :
             G.layout(prog='fdp', args = params)
         except Exception:
             try :
-                G.layout(prog='neato', args = params)
+                G.layout(prog='twopi', args = params)
             except Exception:
                 try :
-                    G.layout(prog='twopi', args = params)
+                    G.layout(prog='sfdp', args = params)
                 except Exception:
                     print 'Layout failed '
     return G

@@ -1,8 +1,11 @@
 import BuildTex
 import StatValues2
 import StatValues3
+import os
 
 def computeValues(subFolder, statData) :
+
+    os.chdir(subFolder)
 
     computeBossTeacher(subFolder)
     computeManWomen(subFolder, statData)
