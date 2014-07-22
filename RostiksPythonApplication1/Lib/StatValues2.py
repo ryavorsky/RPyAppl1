@@ -1,5 +1,6 @@
 # Statistics for chapter 2
 
+import BuildTex
 import StatValues
 
 def  ComputeAll(subFolder, statData):
@@ -18,45 +19,165 @@ def  ComputeAll(subFolder, statData):
 def compute21a(subFolder, statData): # aggregate
     print '\nComputing values for slide 2.1.1.'
     values = StatValues.extractAnswers(statData, [38,39])
-    return []
+    values = StatValues.joinLists(values)
+
+    yesNum = values.count('87') + values.count('88')
+    noNum = values.count('89') + values.count('90')
+    [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
+
+    BuildTex.addMacros(subFolder, 'valBAAyesNum', str(yesNum))
+    BuildTex.addMacros(subFolder, 'valBAAnoNum', str(noNum))
+    BuildTex.addMacros(subFolder, 'valBAAyesNumP', str(yesNumP))
+    BuildTex.addMacros(subFolder, 'valBAAnoNumP', str(noNumP))
+
 
 def compute21b(subFolder, statData): # by age - q14
     print '\nComputing values for slide 2.1.2.'
     values = StatValues.extractAnswers(statData, [14, 38,39])
-    return []
+    values = StatValues.joinListsByAge(values)
+
+    yesNum = [ val.count('87') + val.count('88') for val in values ]
+    noNum = [ val.count('89') + val.count('90') for val in values ]
+
+    BuildTex.addMacros(subFolder, 'valBAByesNumA', str(yesNum[0]))
+    BuildTex.addMacros(subFolder, 'valBAByesNumB', str(yesNum[1]))
+    BuildTex.addMacros(subFolder, 'valBAByesNumC', str(yesNum[2]))
+    BuildTex.addMacros(subFolder, 'valBAByesNumD', str(yesNum[3]))
+
+    BuildTex.addMacros(subFolder, 'valBABnoNumA', str(noNum[0]))
+    BuildTex.addMacros(subFolder, 'valBABnoNumB', str(noNum[1]))
+    BuildTex.addMacros(subFolder, 'valBABnoNumC', str(noNum[2]))
+    BuildTex.addMacros(subFolder, 'valBABnoNumD', str(noNum[3]))
+
 
 def compute21c(subFolder, statData): # by category - q19
     print '\nComputing values for slide 2.1.3.'
     values = StatValues.extractAnswers(statData, [19, 38,39])
-    return []
+    values = StatValues.joinListsByCategory(values)
+
+    yesNum = [ val.count('87') + val.count('88') for val in values ]
+    noNum = [ val.count('89') + val.count('90') for val in values ]
+
+    BuildTex.addMacros(subFolder, 'valBACyesNumA', str(yesNum[0]))
+    BuildTex.addMacros(subFolder, 'valBACyesNumB', str(yesNum[1]))
+    BuildTex.addMacros(subFolder, 'valBACyesNumC', str(yesNum[2]))
+    BuildTex.addMacros(subFolder, 'valBACyesNumD', str(yesNum[3]))
+    BuildTex.addMacros(subFolder, 'valBACyesNumE', str(yesNum[4]))
+    BuildTex.addMacros(subFolder, 'valBACnoNumA', str(noNum[0]))
+    BuildTex.addMacros(subFolder, 'valBACnoNumB', str(noNum[1]))
+    BuildTex.addMacros(subFolder, 'valBACnoNumC', str(noNum[2]))
+    BuildTex.addMacros(subFolder, 'valBACnoNumD', str(noNum[3]))
+    BuildTex.addMacros(subFolder, 'valBACnoNumE', str(noNum[4]))
+
 
 def compute21d(subFolder, statData): # by question
     print '\nComputing values for slide 2.1.4.'
     values = StatValues.extractAnswers(statData, [35,38,39,50,55])
-    return []
+    values = StatValues.joinListsByQuestion(values)
+
+    yesNum = [ val.count('87') + val.count('88') for val in values ]
+    noNum = [ val.count('89') + val.count('90') for val in values ]
+
+    BuildTex.addMacros(subFolder, 'valBADyesNumA', str(yesNum[0]))
+    BuildTex.addMacros(subFolder, 'valBADyesNumB', str(yesNum[1]))
+    BuildTex.addMacros(subFolder, 'valBADyesNumC', str(yesNum[2]))
+    BuildTex.addMacros(subFolder, 'valBADyesNumD', str(yesNum[3]))
+    BuildTex.addMacros(subFolder, 'valBADyesNumE', str(yesNum[4]))
+    BuildTex.addMacros(subFolder, 'valBADnoNumA', str(noNum[0]))
+    BuildTex.addMacros(subFolder, 'valBADnoNumB', str(noNum[1]))
+    BuildTex.addMacros(subFolder, 'valBADnoNumC', str(noNum[2]))
+    BuildTex.addMacros(subFolder, 'valBADnoNumD', str(noNum[3]))
+    BuildTex.addMacros(subFolder, 'valBADnoNumE', str(noNum[4]))
+
 
 def compute22a(subFolder, statData): # aggregate
     print '\nComputing values for slide 2.2.1.'
     values = StatValues.extractAnswers(statData, [28,29,46,47])
-    return []
+    values = StatValues.joinLists(values)
+
+    yesNum = values.count('83') + values.count('84')
+    noNum = values.count('85') + values.count('86')
+    [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
+
+    BuildTex.addMacros(subFolder, 'valBBAyesNum', str(yesNum))
+    BuildTex.addMacros(subFolder, 'valBBAnoNum', str(noNum))
+    BuildTex.addMacros(subFolder, 'valBBAyesNumP', str(yesNumP))
+    BuildTex.addMacros(subFolder, 'valBBAnoNumP', str(noNumP))
+
 
 def compute22b(subFolder, statData): # by age
     print '\nComputing values for slide 2.2.2.'
     values = StatValues.extractAnswers(statData, [14, 28,29,46,47])
-    return []
+    values = StatValues.joinListsByAge(values)
+
+    yesNum = [ val.count('83') + val.count('84') for val in values ]
+    noNum = [ val.count('85') + val.count('86') for val in values ]
+
+    BuildTex.addMacros(subFolder, 'valBBByesNumA', str(yesNum[0]))
+    BuildTex.addMacros(subFolder, 'valBBByesNumB', str(yesNum[1]))
+    BuildTex.addMacros(subFolder, 'valBBByesNumC', str(yesNum[2]))
+    BuildTex.addMacros(subFolder, 'valBBByesNumD', str(yesNum[3]))
+
+    BuildTex.addMacros(subFolder, 'valBBBnoNumA', str(noNum[0]))
+    BuildTex.addMacros(subFolder, 'valBBBnoNumB', str(noNum[1]))
+    BuildTex.addMacros(subFolder, 'valBBBnoNumC', str(noNum[2]))
+    BuildTex.addMacros(subFolder, 'valBBBnoNumD', str(noNum[3]))
+
 
 def compute22c(subFolder, statData): # by category - q19
     print '\nComputing values for slide 2.2.3.'
     values = StatValues.extractAnswers(statData, [19, 28,29,46,47])
-    return []
+    values = StatValues.joinListsByCategory(values)
+
+    yesNum = [ val.count('83') + val.count('84') for val in values ]
+    noNum = [ val.count('85') + val.count('86') for val in values ]
+
+    BuildTex.addMacros(subFolder, 'valBBCyesNumA', str(yesNum[0]))
+    BuildTex.addMacros(subFolder, 'valBBCyesNumB', str(yesNum[1]))
+    BuildTex.addMacros(subFolder, 'valBBCyesNumC', str(yesNum[2]))
+    BuildTex.addMacros(subFolder, 'valBBCyesNumD', str(yesNum[3]))
+    BuildTex.addMacros(subFolder, 'valBBCyesNumE', str(yesNum[4]))
+    BuildTex.addMacros(subFolder, 'valBBCnoNumA', str(noNum[0]))
+    BuildTex.addMacros(subFolder, 'valBBCnoNumB', str(noNum[1]))
+    BuildTex.addMacros(subFolder, 'valBBCnoNumC', str(noNum[2]))
+    BuildTex.addMacros(subFolder, 'valBBCnoNumD', str(noNum[3]))
+    BuildTex.addMacros(subFolder, 'valBBCnoNumE', str(noNum[4]))
+
 
 def compute22d(subFolder, statData): # by question
     print '\nComputing values for slide 2.2.4.'
     values = StatValues.extractAnswers(statData, [28,29,46,47])
-    return []
+    values = StatValues.joinListsByQuestion(values)
+
+    yesNum = [ val.count('83') + val.count('84') for val in values ]
+    noNum = [ val.count('85') + val.count('86') for val in values ]
+
+    BuildTex.addMacros(subFolder, 'valBBDyesNumA', str(yesNum[0]))
+    BuildTex.addMacros(subFolder, 'valBBDyesNumB', str(yesNum[1]))
+    BuildTex.addMacros(subFolder, 'valBBDyesNumC', str(yesNum[2]))
+    BuildTex.addMacros(subFolder, 'valBBDyesNumD', str(yesNum[3]))
+    BuildTex.addMacros(subFolder, 'valBBDnoNumA', str(noNum[0]))
+    BuildTex.addMacros(subFolder, 'valBBDnoNumB', str(noNum[1]))
+    BuildTex.addMacros(subFolder, 'valBBDnoNumC', str(noNum[2]))
+    BuildTex.addMacros(subFolder, 'valBBDnoNumD', str(noNum[3]))
+
 
 def compute22e(subFolder, statData): # aggregate (1 question)
     print '\nComputing values for slide 2.2.5.'
     values = StatValues.extractAnswers(statData, [49])
-    return []
+
+    ansA = values.count('115') 
+    ansB = values.count('116')
+    ansC = values.count('117') 
+    ansD = values.count('118')
+    [ansAp, ansBp, ansCp, ansDp] = StatValues.percent([ansA, ansB, ansC, ansD])
+
+    BuildTex.addMacros(subFolder, 'valBBEansA', str(ansA))
+    BuildTex.addMacros(subFolder, 'valBBEansB', str(ansB))
+    BuildTex.addMacros(subFolder, 'valBBEansC', str(ansC))
+    BuildTex.addMacros(subFolder, 'valBBEansD', str(ansD))
+    BuildTex.addMacros(subFolder, 'valBBEansAp', str(ansAp))
+    BuildTex.addMacros(subFolder, 'valBBEansBp', str(ansBp))
+    BuildTex.addMacros(subFolder, 'valBBEansCp', str(ansCp))
+    BuildTex.addMacros(subFolder, 'valBBEansDp', str(ansDp))
 

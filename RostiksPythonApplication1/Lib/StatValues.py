@@ -13,7 +13,6 @@ def computeValues(subFolder, statData) :
     computeTeachCat(subFolder, statData)
 
     StatValues2.ComputeAll(subFolder, statData)
-
     StatValues3.ComputeAll(subFolder, statData)
 
 def extractAnswers(statData, questionNumbers) :
@@ -33,7 +32,55 @@ def extractAnswers(statData, questionNumbers) :
     print 'Extracted answers for', questionNumbers, ':\n', res
     return res
 
+# join list of lists into one big list
+def joinLists(lst) : 
+    res = []
+    for l in lst :
+        res = res + l
+    return res
+
+def joinListsByAge(lst) : 
+    print 'Join by age'
+    res = [[],[],[],[]]
+    for l in lst :
+        age = 2014 - int(l[0])
+        i = getAgeGroup(age)
+        tail = [l[j+1] for j in range(len(l)-1)]
+        res[i] = res[i] + tail
+    print res
+    return res
+
+def joinListsByCategory(lst) : 
+    print 'Join by category'
+    res = [[],[],[],[],[]]
+    for l in lst :
+        cat = int(l[0]) - 55
+        tail = [l[j+1] for j in range(len(l)-1)]
+        res[cat] = res[cat] + tail
+    print res
+    return res
+
+def joinListsByQuestion(lst) : 
+    print 'Join by question'
+    n = len(lst[0]) # the number of questions
+    res = [[] for i in range(n)]
+    for answers in lst :
+        for i in range(n) :
+            res[i].append(answers[i])
+    print res
+    return res
+
+# compute percentage of valuse in the list
+def percent(lst) : 
+    s = 0
+    for val in lst :
+        s+=val
+    res = [int(val*100/s) for val in lst]
+    return res
+
+# compute group age
 def getAgeGroup(age) :
+    
     if age < 25 :
         return 0
     elif age < 36 :
