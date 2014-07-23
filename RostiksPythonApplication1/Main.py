@@ -9,6 +9,7 @@ import BuildAll
 
 def main() :
 
+    # Change here!
     inputDir = 'c:\\Direktor\\Input\\all'
     outputDir = 'c:\\Direktor\\Output\\all'
 
