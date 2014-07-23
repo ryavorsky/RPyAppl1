@@ -1,6 +1,7 @@
 import BuildTex
 import StatValues2
 import StatValues3
+import StatValues4
 import os
 
 def computeValues(subFolder, statData) :
@@ -17,6 +18,7 @@ def computeValues(subFolder, statData) :
 
     StatValues2.ComputeAll(subFolder, statData)
     StatValues3.ComputeAll(subFolder, statData)
+    StatValues4.ComputeAll(subFolder, statData)
 
 def extractAnswers(statData, questionNumbers) :
     res = []

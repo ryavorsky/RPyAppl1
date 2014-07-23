@@ -47,7 +47,7 @@ def YesNoPie(fileName, yesNum = 11, noNum = 5) :
         if fracs[1] == 0 :
             labels[1] = ''
 
-        colors=['#FF0000' ,'#00BB00']
+        colors=['#FF0000' ,'#9BBB00']
 
         pie(fracs, labels = labels, colors=colors, startangle=90)
         savefig(fileName)
@@ -66,7 +66,12 @@ def Pie(fileName, data):
     fracs = [int(val*100.0/s) for val in data]
     print fracs
     labels = [str(p) + '%' for p in fracs ]
-    colors=['g','b','c','r']
+
+    for i in range(len(fracs)) :
+        if fracs[i] == 0 :
+            labels[i] = ''
+             
+    colors=['#997300','#5B9BD5','#ED7D31','#A5A5A5','#FFC000']
     pie(fracs, labels = labels, colors=colors, startangle=90)
     savefig(fileName)
     close(1)
