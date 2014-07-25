@@ -48,7 +48,9 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
 
                 # Now extract the statistical data
                 data = seq[3]
-                data = data.replace('s:1:','').replace('s:2:','').replace('s:3:','').replace('s:4:','').replace('s:5:','').replace('s:6:','').replace('s:7:','').replace('s:8:','')
+                for i in range(20):
+                    s = 's:'+str(i+1) + ':'
+                    data = data.replace(s,'')
                 data = data.replace('i:0;','').replace('i:1;','').replace('i:2;','').replace('i:3;','').replace('i:4;','').replace('i:5;','')
                 data = data.replace('a:0:','').replace('a:1:','').replace('a:2:','').replace('a:3:','').replace('a:4:','').replace('a:5:','')
                 data = data.replace(';"Q_','*"q').replace(';','=').replace('*',';').replace('}"Q_','};"q').replace('{"Q_','{;"q').replace(';','\t')

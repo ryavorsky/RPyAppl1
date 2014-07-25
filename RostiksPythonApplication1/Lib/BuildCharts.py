@@ -3,9 +3,6 @@ import matplotlib.pyplot as plt
 import matplotlib as mpl
 import shutil
 
-def BuildAllCharts(subFolder, socioData):
-    print '\nBuilding charts in', subFolder, 'from', socioData
-    return
 
 def BuildChart(subFolder, dataList, values = []) :
     figure(1, figsize=(5,5))

@@ -23,13 +23,16 @@ def makeGraphObject(graphData):
             for target in edgeGroups[groupNo]:
                 G.add_edge(id, target, type=groupNo, color = 'lightgrey')
 
-    print '\nGraph object is created. The graph nodes'
-    for node in G.nodes(data = True) :
-        print '\t', node
-
+    print '\nGraph object is created.'
+ 
     return G
 
 def BuildAllGraphs(inputId, subFolder, G0):
+
+    fgraph = open (subFolder + '\\graphdata.txt','w')
+    for node in G0.nodes(data = True) :
+        fgraph.write(str(node)+'\n')
+    fgraph.close()
 
     # Save the number of employee into the Tex file
     BuildTex.addMacros(subFolder, 'nTotal', str(len(G0.nodes())))
@@ -38,23 +41,31 @@ def BuildAllGraphs(inputId, subFolder, G0):
     G4a = aGraphObject(G0, [4,8], 'orange')
     G4a.draw(subFolder + '\\graph4a.png')
     
+    print '\nBuilding ', subFolder + '\\graph4b.png'
     G4b = aSymGraphObject(G0, [4,8], 'red')
     G4b.draw(subFolder + '\\graph4b.png')
 
+    print '\nBuilding ', subFolder + '\\graph5_1a.png'
     G51a = aGraphObject(G0, [5,7], 'blue')
     G51a.draw(subFolder + '\\graph5_1a.png')
 
+    print '\nBuilding ', subFolder + '\\graph5_1.png'
     G51b = aSymGraphObject(G0, [5,7], '#808080')
     G51b.draw(subFolder + '\\graph5_1b.png')
 
+    print '\nBuilding ', subFolder + '\\graph5_2a.png'
     G52a = aGraphObject(G0, [3,6], 'darkgreen')
     G52a.draw(subFolder + '\\graph5_2a.png')
 
+    print '\nBuilding ', subFolder + '\\graph5_2a.png'
     G52b = aSymGraphObject(G0, [3,6], 'darkgreen')
     G52b.draw(subFolder + '\\graph5_2b.png')
 
+    print '\nBuilding ', subFolder + '\\graph5_3.png'
     G53 = aGraphObject(G0, [3,5,6,7], '#448888')
     G53.draw(subFolder + '\\graph5_3.png')
+
+    print '\n Building graphs complete'
     
 
 # format and layout ordered sub-graph
@@ -63,7 +74,7 @@ def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
     G0 = nx.DiGraph()
 
     for node in G_in.nodes() :
-        lbl = G_in.node[node]['number']
+        lbl = G_in.node[node].get('number','NN')
         G0.add_node(node, number = lbl, fontsize = 32, fixedsize='true') # , shape='circle'
     
     for (u,v) in G_in.edges() :
@@ -148,7 +159,10 @@ def makeLayout(G, layout = 'neato', params = '') :
                 try :
                     G.layout(prog='sfdp', args = params)
                 except Exception:
-                    print 'Layout failed '
+                    try :
+                        G.layout(prog='circo', args = params)
+                    except Exception:
+                        print'Layout failed'
     return G
 
 

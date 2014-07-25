@@ -8,6 +8,8 @@ import os
 
 def computeValues(subFolder, statData) :
 
+    print '\nCompute the statistics values and build the charts'
+
     os.chdir(subFolder)
 
     computeBossTeacher(subFolder)
