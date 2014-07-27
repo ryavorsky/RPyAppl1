@@ -26,22 +26,19 @@ def makeReport(inputFileName, outputDir):
         # Parse the input file  
         [graphData, statData] = ParseInput.dataFromFile(inputFileName, inputId, outputDir, subFolder)
 
-        # Compute the values  
+        # Compute the statistics values and build the charts
         StatValues.computeValues(subFolder, statData)
 
-        # Process the input data to create charts, graphs, Tex and then PDF
-        # Create graphs for the reports 
-        graphObject = BuildGraphs.makeGraphObject(graphData)
-        BuildGraphs.BuildAllGraphs(inputId, subFolder, graphObject)
-
-        # Create charts and histograms for the reports 
-        BuildCharts.BuildAllCharts(subFolder, statData)
+        try :
+            # Create graphs for the reports 
+            graphObject = BuildGraphs.makeGraphObject(graphData)
+            BuildGraphs.BuildAllGraphs(inputId, subFolder, graphObject)
+        except Exception as e:
+            print e.message
 
         # Create PDF
         BuildTex.CreatePdf(outputDir, subFolder, inputId, inputFileName)
 
     except Exception as e:
         print e.message
-        print 'Creating PDF failed for ', inputId
-
-    print '\n', '*'*70, '\n', '-'*70, '\n'
+        print '\n Creating PDF failed for ', inputId

@@ -9,8 +9,8 @@ import BuildAll
 
 def main() :
 
-    inputDir = 'c:\\Direktor\\Input\\5'
-    outputDir = 'c:\\Direktor\\Output\\5'
+    inputDir = 'c:\\Direktor\\Input\\2'
+    outputDir = 'c:\\Direktor\\Output\\2'
 
     outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 

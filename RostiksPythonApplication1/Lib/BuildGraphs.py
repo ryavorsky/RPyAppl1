@@ -1,3 +1,5 @@
+# Build graphs and tables for sections 5, 6
+
 import numpy as np
 import matplotlib.mlab as mlab
 import matplotlib.pyplot as plt
@@ -7,10 +9,11 @@ import pylab as plt
 import random
 
 import BuildTex
+import BuildTables
 
 def makeGraphObject(graphData):
 
-    G = nx.DiGraph()
+    G = nx.MultiDiGraph()
 
     for nodeData in graphData:
 
@@ -29,48 +32,69 @@ def makeGraphObject(graphData):
 
 def BuildAllGraphs(inputId, subFolder, G0):
 
+    # Save the graph data 
+    saveFullGraphData(subFolder, G0)
+    buildGraph5a(subFolder, G0)
+    buildGraph5b(subFolder, G0)
+    buildGraph5c(subFolder, G0)
+    buildGraph61a(subFolder, G0)
+    buildGraph62a(subFolder, G0)
+    buildGraph61b(subFolder, G0)
+    buildGraph62b(subFolder, G0)
+
+    print '\n Building graphs complete'
+
+def buildGraph5a(subFolder, G0) :
+    print '\nBuilding ', subFolder + '\\graph5a.png'
+    G5a = aGraphObject(G0, [4,8], 'red')
+    G5a.draw(subFolder + '\\graph5a.png')
+    
+def buildGraph5b(subFolder, G0) :
+    print '\nBuilding ', subFolder + '\\graph5b.png'
+    G5b = aSymGraphObject(G0, [4,8], 'red')
+    G5b.draw(subFolder + '\\graph5b.png')
+
+def buildGraph5c(subFolder, G0) :
+    print '\nBuilding rating for slide 5.3.'
+    G5c = subGraphFromTypes(G0, [4,8])
+    BuildTables.computeTable1(subFolder, G5c)
+
+def buildGraph61a(subFolder, G0) :
+    print '\nBuilding ', subFolder + '\\graph6_1a.png'
+    G61a = aGraphObject(G0, [5,7], '#808080')
+    G61a.draw(subFolder + '\\graph6_1a.png')
+
+def buildGraph61b(subFolder, G0) :
+    print '\nBuilding ', subFolder + '\\graph6_1b.png'
+    G61b = aSymGraphObject(G0, [5,7], '#808080')
+    G61b.draw(subFolder + '\\graph6_1b.png')
+
+def buildGraph62a(subFolder, G0) :
+    print '\nBuilding ', subFolder + '\\graph6_2a.png'
+    G62a = aGraphObject(G0, [3,6], 'darkgreen')
+    G62a.draw(subFolder + '\\graph6_2a.png')
+
+def buildGraph62b(subFolder, G0) :
+    print '\nBuilding ', subFolder + '\\graph6_2b.png'
+    G62b = aSymGraphObject(G0, [3,6], 'darkgreen')
+    G62b.draw(subFolder + '\\graph6_2b.png')
+
+
+def saveFullGraphData(subFolder, G0) :
+    # Save the graph data 
     fgraph = open (subFolder + '\\graphdata.txt','w')
     for node in G0.nodes(data = True) :
         fgraph.write(str(node)+'\n')
+    for edge in G0.edges(data = True) :
+        fgraph.write(str(edge)+'\n')
     fgraph.close()
 
     # Save the number of employee into the Tex file
     BuildTex.addMacros(subFolder, 'nTotal', str(len(G0.nodes())))
 
-    print '\nBuilding ', subFolder + '\\graph4a.png'
-    G4a = aGraphObject(G0, [4,8], 'orange')
-    G4a.draw(subFolder + '\\graph4a.png')
-    
-    print '\nBuilding ', subFolder + '\\graph4b.png'
-    G4b = aSymGraphObject(G0, [4,8], 'red')
-    G4b.draw(subFolder + '\\graph4b.png')
 
-    print '\nBuilding ', subFolder + '\\graph5_1a.png'
-    G51a = aGraphObject(G0, [5,7], 'blue')
-    G51a.draw(subFolder + '\\graph5_1a.png')
-
-    print '\nBuilding ', subFolder + '\\graph5_1.png'
-    G51b = aSymGraphObject(G0, [5,7], '#808080')
-    G51b.draw(subFolder + '\\graph5_1b.png')
-
-    print '\nBuilding ', subFolder + '\\graph5_2a.png'
-    G52a = aGraphObject(G0, [3,6], 'darkgreen')
-    G52a.draw(subFolder + '\\graph5_2a.png')
-
-    print '\nBuilding ', subFolder + '\\graph5_2a.png'
-    G52b = aSymGraphObject(G0, [3,6], 'darkgreen')
-    G52b.draw(subFolder + '\\graph5_2b.png')
-
-    print '\nBuilding ', subFolder + '\\graph5_3.png'
-    G53 = aGraphObject(G0, [3,5,6,7], '#448888')
-    G53.draw(subFolder + '\\graph5_3.png')
-
-    print '\n Building graphs complete'
-    
-
-# format and layout ordered sub-graph
-def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
-
+# Extract subgraph for the given list of edges types
+def subGraphFromTypes(G_in, types, color = 'black'):
     G0 = nx.DiGraph()
 
     for node in G_in.nodes() :
@@ -78,9 +102,30 @@ def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
         G0.add_node(node, number = lbl, fontsize = 32, fixedsize='true') # , shape='circle'
     
     for (u,v) in G_in.edges() :
-        type = int(G_in[u][v]['type'])
-        if  types.count(type) > 0:
-            G0.add_edge(u,v, style = 'bold', color = color, minlen='3')
+        copies = len(G_in[u][v]) # note that edge may have several copies of different type
+        for n in range (copies) :
+            type = int(G_in[u][v][n]['type'])
+            if  types.count(type) > 0:
+                G0.add_edge(u,v, style = 'bold', color = color, minlen='3')
+    return G0
+
+def symSubGraphFromTypes(G_in, types, color = 'black') :
+
+    G1 = nx.Graph()
+
+    G0 = subGraphFromTypes(G_in, types, color = 'black')
+    G1.add_nodes_from(G0.nodes(data=True))
+
+    for (u,v) in G0.edges() :
+        if G0.has_edge(v,u) :
+            G1.add_edge(u,v, style = 'bold', color = color, minlen='3', dir = 'both')
+
+    return G1
+
+# format and layout ordered sub-graph
+def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
+
+    G0 = subGraphFromTypes(G_in, types, color)
 
     G = nx.to_agraph(G0)
     G.graph_attr.update(splines='true', overlap='false', ratio='fill', size='21,21')
@@ -103,30 +148,18 @@ def aGraphObject(G_in, types = [], color = 'black', layout = 'neato') :
 # the similar for the symmetric part
 def aSymGraphObject(G_in, types, color = 'black') :
  
-    G = nx.to_agraph(G_in)
+    G1 = symSubGraphFromTypes(G_in, types, color)
+
+    G = nx.to_agraph(G1)
     G.graph_attr.update(splines='true', overlap='false', ratio='fill', size='15,15')
-
-    for edge in G.edges() :
-        type1 = int(edge.attr['type'])
-        (a,b) = edge
-        if G.has_edge(b,a):
-            type2 = int(G.get_edge(b,a).attr['type'])
-            if (types.count(type1) > 0) & (types.count(type2) > 0) & (a<b):
-                edge.attr['style'] = 'bold'
-                edge.attr['color'] = color
-                edge.attr['dir'] = 'both'
-                edge.attr['minlen'] = '3'
-
-
-    for edge in G.edges() :
-        if edge.attr['color'] == 'lightgrey' :
-            G.remove_edge(edge)
 
     for node in G.nodes() :
         w = 0.3*(G.in_degree(node) + G.out_degree(node))
         w =  0.4 + int(w*10)/10.0
-        print node, 'degrees', G.in_degree(node), G.out_degree(node),' width ', w
-        node.attr['width'] = str(w)
+        size = str(w)
+        print node, 'degrees', G.in_degree(node), G.out_degree(node),' width ', size
+        node.attr['width'] = size
+        node.attr['height'] = size
         node.attr['fontsize'] = '32'
         node.attr['fixedsize'] = 'true'
 
@@ -165,46 +198,3 @@ def makeLayout(G, layout = 'neato', params = '') :
                         print'Layout failed'
     return G
 
-
-def nodeColor(age):
-    # compute color of the graph node according to the age
-    k = (age - 30.0)/30.0
-    if k < 0 :
-        k = 0
-    if k > 1 :
-        k = 1
-    R = int(193 + k*(160 - 193))
-    G = int(253 + k*(160 - 253))
-    B = int(205 + k*(254 - 205))
-    RGB = '#' + format(R, '02x') + format(G, '02x') + format(B, '02x')
-
-    return RGB
-
-
-def nodeShape(age):
-    return 'circle'
-    if age < 46 :
-        return 'diamond'
-    else :
-        return 'box'
-
-def testDiagram(folder):
-    # example data
-    mu = 100 # mean of distribution
-    sigma = 15 # standard deviation of distribution
-    x = mu + sigma * np.random.randn(10000)
-
-    num_bins = 50
-    # the histogram of the data
-    n, bins, patches = plt.hist(x, num_bins, normed=1, facecolor='green', alpha=0.5)
-    # add a 'best fit' line
-    y = mlab.normpdf(bins, mu, sigma)
-    plt.plot(bins, y, 'r--')
-    plt.xlabel('Smarts')
-    plt.ylabel('Probability')
-    plt.title(r'Histogram of IQ: $\mu=100$, $\sigma=15$')
-
-    # Tweak spacing to prevent clipping of ylabel
-    plt.subplots_adjust(left=0.15)
-    
-    plt.savefig(folder+'\\fig.png')
