@@ -41,6 +41,9 @@ def BuildAllGraphs(inputId, subFolder, G0):
     buildGraph62a(subFolder, G0)
     buildGraph61b(subFolder, G0)
     buildGraph62b(subFolder, G0)
+    buildGraph63a(subFolder, G0)
+    buildGraph63b(subFolder, G0)
+    buildGraph63c(subFolder, G0)
 
     print '\n Building graphs complete'
 
@@ -57,7 +60,7 @@ def buildGraph5b(subFolder, G0) :
 def buildGraph5c(subFolder, G0) :
     print '\nBuilding rating for slide 5.3.'
     G5c = subGraphFromTypes(G0, [4,8])
-    BuildTables.computeTable1(subFolder, G5c)
+    BuildTables.computeTable(subFolder, 'table1.tex', G5c)
 
 def buildGraph61a(subFolder, G0) :
     print '\nBuilding ', subFolder + '\\graph6_1a.png'
@@ -79,6 +82,20 @@ def buildGraph62b(subFolder, G0) :
     G62b = aSymGraphObject(G0, [3,6], 'darkgreen')
     G62b.draw(subFolder + '\\graph6_2b.png')
 
+def buildGraph63a(subFolder, G0) :
+    print '\nBuilding rating for slide 6.3.1.'
+    G63a = subGraphFromTypes(G0, [0])
+    BuildTables.computeTable(subFolder, 'table2.tex', G63a)
+
+def buildGraph63b(subFolder, G0) :
+    print '\nBuilding rating for slide 6.3.2.'
+    G63b = subGraphFromTypes(G0, [5,7])
+    BuildTables.computeTable(subFolder, 'table3.tex', G63b)
+
+def buildGraph63c(subFolder, G0) :
+    print '\nBuilding rating for slide 6.3.3.'
+    G63c = subGraphFromTypes(G0, [3,6])
+    BuildTables.computeTable(subFolder, 'table4.tex', G63c)
 
 def saveFullGraphData(subFolder, G0) :
     # Save the graph data 

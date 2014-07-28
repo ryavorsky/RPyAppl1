@@ -3,21 +3,17 @@
 import BuildTex
 import StatValues
 
-def  ComputeAll(subFolder, statData):
-
-    computeTable1(subFolder, statData)
-
-def computeTable1(subFolder, G) :
-    print '\nBuilding Table 1'
+def computeTable(subFolder, fileName, G) :
+    print '\nBuilding table ', fileName
     names = extractNames(subFolder)
-    f = open(subFolder + '\\table1.tex','a')
+    f = open(subFolder + '\\' + fileName,'a')
     
     res = []
     for n in G.nodes() :
         id = G.node[n]['number']
         fullName = names[id][0]
         position = names[id][1]
-        score = G.degree(n)
+        score = G.in_degree(n)
         res.append([id,fullName,position,score])
 
     res.sort(cmp = cmp)
@@ -58,7 +54,5 @@ def extractNames(subFolder) :
 
         names[num] = [name,position]
 
-    print names
     f.close()
-
     return names
