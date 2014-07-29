@@ -12,7 +12,7 @@
     <OutputPath>.</OutputPath>
     <Name>RPyAppl1</Name>
     <RootNamespace>RostiksPythonApplication1</RootNamespace>
-    <PublishUrl>c:\Python27\Direktor</PublishUrl>
+    <PublishUrl>c:\Python27\Direktor\Src</PublishUrl>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
