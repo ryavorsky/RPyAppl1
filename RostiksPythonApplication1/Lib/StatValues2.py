@@ -17,6 +17,12 @@ def  ComputeAll(subFolder, statData):
     compute22d(subFolder, statData)
     compute22e(subFolder, statData)
 
+    compute23a(subFolder, statData)
+    compute23b(subFolder, statData)
+    compute23c(subFolder, statData)
+    compute23d(subFolder, statData)
+
+
 def compute21a(subFolder, statData): # aggregate
     print '\nComputing values for slide 2.1.1.'
     values = StatValues.extractAnswers(statData, [38,39])
@@ -216,4 +222,72 @@ def compute22e(subFolder, statData): # aggregate (1 question)
     BuildTex.addMacros(subFolder, 'valBBEansDp', str(ansDp))
     
     BuildCharts.Pie(subFolder + '\\pie225.png', [ansA, ansB, ansC, ansD])
+
+
+def compute23a(subFolder, statData): # aggregate
+    print '\nComputing values for slide 2.3.1.'
+    values = StatValues.extractAnswers(statData, [23])
+
+    yesNum = values.count('61')
+    noNum = values.count('62')
+    [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
+
+    BuildTex.addMacros(subFolder, 'valBCAyesNum', str(yesNum))
+    BuildTex.addMacros(subFolder, 'valBCAnoNum', str(noNum))
+    BuildTex.addMacros(subFolder, 'valBCAyesNumP', str(yesNumP))
+    BuildTex.addMacros(subFolder, 'valBCAnoNumP', str(noNumP))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie231.png', yesNum, noNum)
+
+
+def compute23b(subFolder, statData): # aggregate
+    print '\nComputing values for slide 2.3.2.'
+    values = StatValues.extractAnswers(statData, [52])
+
+    yesNum = values.count('99') + values.count('100')
+    noNum = values.count('101') + values.count('102')
+    [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
+
+    BuildTex.addMacros(subFolder, 'valBCByesNum', str(yesNum))
+    BuildTex.addMacros(subFolder, 'valBCBnoNum', str(noNum))
+    BuildTex.addMacros(subFolder, 'valBCByesNumP', str(yesNumP))
+    BuildTex.addMacros(subFolder, 'valBCBnoNumP', str(noNumP))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie232.png', yesNum, noNum)
+
+
+def compute23c(subFolder, statData): # aggregate (1 question)
+    print '\nComputing values for slide 2.3.3.'
+    values = StatValues.extractAnswers(statData, [53])
+
+    ansA = values.count('120') 
+    ansB = values.count('121')
+    ansC = values.count('122') 
+    [ansAp, ansBp, ansCp] = StatValues.percent([ansA, ansB, ansC])
+
+    BuildTex.addMacros(subFolder, 'valBCCansA', str(ansA))
+    BuildTex.addMacros(subFolder, 'valBCCansB', str(ansB))
+    BuildTex.addMacros(subFolder, 'valBCCansC', str(ansC))
+    BuildTex.addMacros(subFolder, 'valBCCansAp', str(ansAp))
+    BuildTex.addMacros(subFolder, 'valBCCansBp', str(ansBp))
+    BuildTex.addMacros(subFolder, 'valBCCansCp', str(ansCp))
+    
+    BuildCharts.Pie(subFolder + '\\pie233.png', [ansA, ansB, ansC])
+
+
+def compute23d(subFolder, statData): # aggregate
+    print '\nComputing values for slide 2.3.4.'
+    values = StatValues.extractAnswers(statData, [30])
+
+    yesNum = values.count('83') + values.count('84')
+    noNum = values.count('85') + values.count('86')
+    [yesNumP, noNumP] = StatValues.percent([yesNum,noNum])
+
+    BuildTex.addMacros(subFolder, 'valBCDyesNum', str(yesNum))
+    BuildTex.addMacros(subFolder, 'valBCDnoNum', str(noNum))
+    BuildTex.addMacros(subFolder, 'valBCDyesNumP', str(yesNumP))
+    BuildTex.addMacros(subFolder, 'valBCDnoNumP', str(noNumP))
+
+    BuildCharts.YesNoPie(subFolder + '\\pie234.png', yesNum, noNum)
+
 

@@ -59,7 +59,7 @@ def Pie(fileName, data):
     s = 0.0
     for val in data :
         s = s + int(val)
-    print sum
+
     fracs = [int(val*100.0/s) for val in data]
     print fracs
     labels = [str(p) + '%' for p in fracs ]

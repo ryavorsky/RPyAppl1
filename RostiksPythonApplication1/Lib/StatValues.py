@@ -1,10 +1,12 @@
+import os
+import math
+
 import BuildTex
 import StatValues2
 import StatValues3
 import StatValues4
 import StatValues7
 import StatValues8
-import os
 
 def computeValues(subFolder, statData) :
 
@@ -87,7 +89,7 @@ def percent(lst) :
     for val in lst :
         s+=val
 
-    res = [int(val*100/s) for val in lst]
+    res = [int(math.floor(val*100/s + 0.5)) for val in lst]
     sp = 0
     l = len(res)
     for i in range(l - 1) :
