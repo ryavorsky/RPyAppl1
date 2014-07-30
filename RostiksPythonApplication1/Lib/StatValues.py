@@ -86,7 +86,15 @@ def percent(lst) :
     s = 0
     for val in lst :
         s+=val
+
     res = [int(val*100/s) for val in lst]
+    sp = 0
+    l = len(res)
+    for i in range(l - 1) :
+        sp += res[i]
+
+    res[l-1] = 100 - sp
+
     return res
 
 # compute group age
