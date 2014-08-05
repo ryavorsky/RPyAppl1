@@ -13,7 +13,7 @@ def computeValues(subFolder, statData) :
 
     os.chdir(subFolder)
 
-    computeBossTeacher(subFolder)
+    computeBossTeacher(subFolder, statData)
     computeManWomen(subFolder, statData)
     computeAge(subFolder, statData)
     computeEducation(subFolder, statData)
@@ -122,24 +122,14 @@ def computeManWomen(subFolder, statData) :
     BuildTex.addMacros(subFolder, 'numMen', str(men))
     BuildTex.addMacros(subFolder, 'numWomen', str(women))
 
-def computeBossTeacher(subFolder) :
-    fileName =  subFolder + '\\nameslist.tex' # Teacher names to be included in report
-    f = open(fileName, 'r')
+def computeBossTeacher(subFolder, statData) :
+    values = extractAnswers(statData, [8])
     boss = 0
     teacher = 0
-    for line in f.readlines() :
-        pos = line.find(',')
-        l = len(line) - pos
-        print 'Boss:', pos, l, line
-        if l > 80  :
-            boss += 1
-        else :
-            teacher += 1
 
     BuildTex.addMacros(subFolder, 'numBoss', str(boss))
     BuildTex.addMacros(subFolder, 'numTeacher', str(teacher))
 
-    f.close()
 
 def computeAge(subFolder, statData) :
     values = extractAnswers(statData, [14])

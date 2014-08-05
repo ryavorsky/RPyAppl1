@@ -2,6 +2,77 @@ import os
 import BuildTex
 
 def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
+    print '\nParsing file:', inputFileName
+    print 'Input ID:', inputId
+    print 'Folders:', outputFolder, subFolder
+
+    keys = extractKeys(subFolder)
+    print '\nKey:'
+    for e in keys :
+        print e
+
+    f_in = open(inputFileName, 'r')
+    f_data = open(subFolder + '\\data.txt', 'w')
+
+    graphData = []
+    statData = []
+    toprow = f_in.readline()
+
+    for line in f_in.readlines() :
+        dataline = extractDataLine(line, keys)
+        statData.append(dataline)
+        f_data.write(dataline + '\n')
+
+    f_in.close()
+    f_data.close()
+
+    return [graphData, statData]
+
+
+def extractKeys(subFolder) :
+
+    print '\nExtracting keys'
+    res = []    
+    f = open (subFolder + '\\key.txt', 'r')
+    line = f.readline() # skip the table header
+    for line in f.readlines() :
+        res.append( line.split('\t') )
+    f.close()
+    return res
+
+
+def extractDataLine(line, keys):
+    res = line.split(';')
+
+    if len(res) == len(keys) :
+        for i in range(len(res)) :
+            res[i] = extractDataValue(res[i], keys[i])
+        print '\nExtracted data line', res
+        return '\t'.join(res)
+    else :
+        print 'Keys lenght is wrong', len(res), len(keys)
+
+
+def extractDataValue(value, key):
+    listId = int(key[2])
+    questionId = 'q' + key[0]
+
+    res = value.strip()
+    if listId != 0 and value != '':
+        options = key[3].strip().split(';')
+        optionId = [option.split(':')[0] for option in options]
+        optionVal = [option.split(':')[1].strip() for option in options]
+        for i in range(len(options)) :
+            if res == optionVal[i] :
+                res = optionId[i]
+        
+    return questionId + '=' + res
+
+
+
+def dataFromFile_old(inputFileName, inputId, outputFolder, subFolder):
+
+    print 'Parsing', inputFileName
 
     # extract input file Id 
     inputId = os.path.basename(inputFileName).split('.')[0].split('_')[1]
@@ -15,13 +86,7 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     graphData = []
     statData = []
 
-    statDataDict = dict()
-    for i in range(9,60) :
-        statDataDict['q' + str(i)] = []
     localId = 0 # id of a peson in his orhanization
-
-
-    print 'Parse input initialized'
 
     # use the first line of the input file to build title page
     firstLine = f_in.readline()
@@ -61,16 +126,7 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
                 statData.append(data)
 
                 f_data.write( data + '\n')
-
-                for i in range(9,60) :
-                    q = 'q' + str(i)
-                    p_start = data.find(q)
-                    if p_start >= 0 :
-                        s = data[p_start:(p_start+100)].split('\t')[0]
-                        s = s.split('=')[1]
-                        if s.find('{') == -1 :
-                            statDataDict[q]= statDataDict[q] + [s]
-    
+   
     print '\nStat data', statData
 
     f_in.close()
@@ -81,7 +137,6 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     BuildTex.addMacros(subFolder, 'nParticipated', str(len(graphData)))
 
     return [graphData, statData]
-
 
 
 # extract connections for the current respondee
@@ -118,9 +173,35 @@ def MakeTitlePage(firstLine, subFolder) :
     orgId = orgId.split('=')[1]
     BuildTex.addMacros(subFolder,'internalId', orgId)
     
-# extracxt age of the respondee
+# extract age of the respondee
 def extractAge(str):
     yearInd = str.find(':"19') + 2
     year = str[ yearInd : (yearInd+4) ]
     age = 2014 - int(year)
     return age
+
+def SplitBySchool(inFileName, outputDir) :
+    f = open(inFileName, 'r')
+    f1 = open(outputDir + 'topline.txt', 'w')
+
+    toprow = f.readline()
+    f1.write(toprow)
+
+    school = ''
+    schoolId = 0 
+
+    for line in f.readlines() :
+        data = line.split(';')
+        schoolName = data[1]
+        if schoolName == school :
+            f1.write(line)
+        else :
+            f1.close()
+            schoolId += 1
+            school = schoolName
+            f1 = open(outputDir + 'exp_' + str(schoolId) + '.txt', 'w')
+            print schoolId, schoolName
+            f1.write(toprow)
+            f1.write(line)
+    f.close()
+
