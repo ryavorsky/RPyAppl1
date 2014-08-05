@@ -29,8 +29,7 @@
     <Compile Include="Lib\BuildAll.py" />
     <Compile Include="Lib\BuildTables.py" />
     <Compile Include="Lib\Tests.py" />
-    <Compile Include="Lib\StatValues8.py" />
-    <Compile Include="Lib\StatValues7.py" />
+    <Compile Include="Lib\StatValues5.py" />
     <Compile Include="Lib\StatValues4.py" />
     <Compile Include="Lib\StatValues3.py" />
     <Compile Include="Lib\StatValues2.py" />

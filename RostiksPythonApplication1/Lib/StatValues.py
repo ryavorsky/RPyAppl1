@@ -5,8 +5,7 @@ import BuildTex
 import StatValues2
 import StatValues3
 import StatValues4
-import StatValues7
-import StatValues8
+import StatValues5
 
 def computeValues(subFolder, statData) :
 
@@ -25,8 +24,7 @@ def computeValues(subFolder, statData) :
     StatValues2.ComputeAll(subFolder, statData)
     StatValues3.ComputeAll(subFolder, statData)
     StatValues4.ComputeAll(subFolder, statData)
-    StatValues7.ComputeAll(subFolder, statData)
-    StatValues8.ComputeAll(subFolder, statData)
+    StatValues5.ComputeAll(subFolder, statData)
 
 def extractAnswers(statData, questionNumbers) :
     res = []
@@ -83,6 +81,7 @@ def joinListsByQuestion(lst) :
     print res
     return res
 
+
 # compute percentage of valuse in the list
 def percent(lst) : 
     s = 0
@@ -90,12 +89,17 @@ def percent(lst) :
         s+=val
 
     res = [int(math.floor(val*100/s + 0.5)) for val in lst]
-    sp = 0
-    l = len(res)
-    for i in range(l - 1) :
-        sp += res[i]
 
-    res[l-1] = 100 - sp
+    sp = 0
+    for p in res :
+        sp += p
+    delta = 100 - sp
+
+    imax = 0
+    for i in range(len(res) - 1) :
+        if res[i+1] > res[imax] :
+            imax = i + 1
+    res[imax] += delta
 
     return res
 

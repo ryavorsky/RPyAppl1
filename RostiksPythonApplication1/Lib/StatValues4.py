@@ -30,7 +30,7 @@ def compute41(subFolder, statData): # one question
     BuildTex.addMacros(subFolder, 'valDAansCp', str(ansCp))
     BuildTex.addMacros(subFolder, 'valDAansDp', str(ansDp))
     
-    BuildCharts.Pie(subFolder + '\\pie41.png', [ansA, ansB, ansC, ansD])
+    BuildCharts.Pie(subFolder + '\\pie41.png', [ansAp, ansBp, ansCp, ansDp])
 
 
 def compute42a(subFolder, statData): # one question 
@@ -51,7 +51,7 @@ def compute42a(subFolder, statData): # one question
     BuildTex.addMacros(subFolder, 'valDBAansCp', str(ansCp))
     BuildTex.addMacros(subFolder, 'valDBAansDp', str(ansDp))
     
-    BuildCharts.Pie(subFolder + '\\pie42_a_.png', [ansA, ansB, ansC, ansD])
+    BuildCharts.Pie(subFolder + '\\pie42_a_.png', [ansAp, ansBp, ansCp, ansDp])
 
 
 def compute42b(subFolder, statData): # one question 
@@ -75,7 +75,7 @@ def compute42b(subFolder, statData): # one question
     BuildTex.addMacros(subFolder, 'valDBBansDp', str(ansDp))
     BuildTex.addMacros(subFolder, 'valDBBansEp', str(ansEp))
     
-    BuildCharts.Pie(subFolder + '\\pie42_b_.png', [ansA, ansB, ansC, ansD, ansE])
+    BuildCharts.Pie(subFolder + '\\pie42_b_.png', [ansAp, ansBp, ansCp, ansDp, ansEp])
 
 
 def compute42c(subFolder, statData): # one question 

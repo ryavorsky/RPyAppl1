@@ -221,7 +221,7 @@ def compute22e(subFolder, statData): # aggregate (1 question)
     BuildTex.addMacros(subFolder, 'valBBEansCp', str(ansCp))
     BuildTex.addMacros(subFolder, 'valBBEansDp', str(ansDp))
     
-    BuildCharts.Pie(subFolder + '\\pie225.png', [ansA, ansB, ansC, ansD])
+    BuildCharts.Pie(subFolder + '\\pie225.png', [ansAp, ansBp, ansCp, ansDp])
 
 
 def compute23a(subFolder, statData): # aggregate
@@ -237,7 +237,7 @@ def compute23a(subFolder, statData): # aggregate
     BuildTex.addMacros(subFolder, 'valBCAyesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valBCAnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie231.png', yesNum, noNum)
+    BuildCharts.YesNoPie(subFolder + '\\pie231.png', yesNumP, noNumP)
 
 
 def compute23b(subFolder, statData): # aggregate
@@ -253,7 +253,7 @@ def compute23b(subFolder, statData): # aggregate
     BuildTex.addMacros(subFolder, 'valBCByesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valBCBnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie232.png', yesNum, noNum)
+    BuildCharts.YesNoPie(subFolder + '\\pie232.png', yesNumP, noNumP)
 
 
 def compute23c(subFolder, statData): # aggregate (1 question)
@@ -272,7 +272,7 @@ def compute23c(subFolder, statData): # aggregate (1 question)
     BuildTex.addMacros(subFolder, 'valBCCansBp', str(ansBp))
     BuildTex.addMacros(subFolder, 'valBCCansCp', str(ansCp))
     
-    BuildCharts.Pie(subFolder + '\\pie233.png', [ansA, ansB, ansC])
+    BuildCharts.Pie(subFolder + '\\pie233.png', [ansAp, ansBp, ansCp])
 
 
 def compute23d(subFolder, statData): # aggregate
@@ -288,6 +288,6 @@ def compute23d(subFolder, statData): # aggregate
     BuildTex.addMacros(subFolder, 'valBCDyesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valBCDnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie234.png', yesNum, noNum)
+    BuildCharts.YesNoPie(subFolder + '\\pie234.png', yesNumP, noNumP)
 
 

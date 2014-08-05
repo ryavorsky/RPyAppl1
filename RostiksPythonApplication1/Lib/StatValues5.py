@@ -1,4 +1,4 @@
-# Statistics for chapter 7
+# Statistics for chapter 5
 
 import BuildTex
 import BuildCharts
