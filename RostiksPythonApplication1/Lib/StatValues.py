@@ -13,6 +13,9 @@ def computeValues(subFolder, statData) :
 
     os.chdir(subFolder)
 
+    BuildTex.MakeTitlePage(subFolder, statData)
+    BuildTex.buildNamesList(subFolder, statData)
+
     computeBossTeacher(subFolder, statData)
     computeManWomen(subFolder, statData)
     computeAge(subFolder, statData)
@@ -20,9 +23,6 @@ def computeValues(subFolder, statData) :
     computeWorkYears(subFolder, statData)
     computeWorkHereYears(subFolder, statData)
     computeTeachCat(subFolder, statData)
-
-    BuildTex.MakeTitlePage(subFolder, statData)
-    BuildTex.buildNamesList(subFolder, statData)
 
     StatValues2.ComputeAll(subFolder, statData)
     StatValues3.ComputeAll(subFolder, statData)

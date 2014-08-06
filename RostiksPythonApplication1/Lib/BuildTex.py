@@ -41,7 +41,7 @@ def MakeTitlePage(subFolder, statData) :
     p1 = subFolder.rfind('\\')
     p2 = subFolder.rfind('_')
     orgId = subFolder[(p1+1):p2]
-    orgName = data[0].split('=')[1]
+    orgName = data[1].split('=')[1]
     orgName =  orgName.decode("CP1251").encode("UTF-8")
 
     addMacros(subFolder,'fullName', orgName)
