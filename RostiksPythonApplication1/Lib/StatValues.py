@@ -21,6 +21,9 @@ def computeValues(subFolder, statData) :
     computeWorkHereYears(subFolder, statData)
     computeTeachCat(subFolder, statData)
 
+    BuildTex.MakeTitlePage(subFolder, statData)
+    BuildTex.buildNamesList(subFolder, statData)
+
     StatValues2.ComputeAll(subFolder, statData)
     StatValues3.ComputeAll(subFolder, statData)
     StatValues4.ComputeAll(subFolder, statData)
@@ -43,12 +46,14 @@ def extractAnswers(statData, questionNumbers) :
     print 'Extracted answers for', questionNumbers, ':\n', res
     return res
 
+
 # join list of lists into one big list
 def joinLists(lst) : 
     res = []
     for l in lst :
         res = res + l
     return res
+
 
 def joinListsByAge(lst) : 
     print 'Join by age'
@@ -61,6 +66,7 @@ def joinListsByAge(lst) :
     print res
     return res
 
+
 def joinListsByCategory(lst) : 
     print 'Join by category'
     res = [[],[],[],[],[]]
@@ -70,6 +76,7 @@ def joinListsByCategory(lst) :
         res[cat] = res[cat] + tail
     print res
     return res
+
 
 def joinListsByQuestion(lst) : 
     print 'Join by question'
@@ -103,7 +110,8 @@ def percent(lst) :
 
     return res
 
-# compute group age
+
+# compute age group 
 def getAgeGroup(age) :
     
     if age < 25 :
@@ -115,12 +123,14 @@ def getAgeGroup(age) :
     else:
         return 3 
 
+
 def computeManWomen(subFolder, statData) :
     values = extractAnswers(statData, [9])
     men = values.count('14')
     women = values.count('15')
     BuildTex.addMacros(subFolder, 'numMen', str(men))
     BuildTex.addMacros(subFolder, 'numWomen', str(women))
+
 
 def computeBossTeacher(subFolder, statData) :
     values = extractAnswers(statData, [8])
@@ -152,6 +162,7 @@ def computeAge(subFolder, statData) :
     BuildTex.addMacros(subFolder, 'numSenior', str(senior))
     BuildTex.addMacros(subFolder, 'numOld', str(old))
 
+
 def computeEducation(subFolder, statData) :
     values = extractAnswers(statData, [15])
     eduValues = []
@@ -173,6 +184,7 @@ def computeEducation(subFolder, statData) :
     BuildTex.addMacros(subFolder, 'numEduF', str(eduStat[5]))
     BuildTex.addMacros(subFolder, 'numEduG', str(eduStat[6]))
 
+
 def computeWorkYears(subFolder, statData) :
     values = extractAnswers(statData, [16])
     years = map(extractNumber, values)
@@ -192,6 +204,7 @@ def computeWorkYears(subFolder, statData) :
     BuildTex.addMacros(subFolder, 'numExpC', str(expC))
     BuildTex.addMacros(subFolder, 'numExpD', str(expD))
 
+
 def extractNumber(s) :
     try :
         res = int(s[0:2])
@@ -199,6 +212,7 @@ def extractNumber(s) :
         res = int(s[0:1])
 
     return res
+
 
 def computeWorkHereYears(subFolder, statData):
     values = extractAnswers(statData, [17])
@@ -218,6 +232,7 @@ def computeWorkHereYears(subFolder, statData):
     BuildTex.addMacros(subFolder, 'numExpHereB', str(expB))
     BuildTex.addMacros(subFolder, 'numExpHereC', str(expC))
     BuildTex.addMacros(subFolder, 'numExpHereD', str(expD))
+
 
 def computeTeachCat(subFolder, statData) :
     values = extractAnswers(statData, [19])

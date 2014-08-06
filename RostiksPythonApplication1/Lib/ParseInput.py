@@ -1,5 +1,6 @@
 import os
 import BuildTex
+import StatValues
 
 def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     print '\nParsing file:', inputFileName
@@ -17,16 +18,50 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     graphData = []
     statData = []
     toprow = f_in.readline()
+    localId = 0
 
     for line in f_in.readlines() :
         dataline = extractDataLine(line, keys)
         statData.append(dataline)
         f_data.write(dataline + '\n')
 
+        localId += 1
+        graphline = extractGraphDataBlock(dataline, localId)
+        graphData.append(graphline)
+
     f_in.close()
     f_data.close()
 
     return [graphData, statData]
+
+
+def extractGraphDataBlock(dataline, localId) :
+
+    id = StatValues.extractAnswers([dataline], [5])[0]
+    name = StatValues.extractAnswers([dataline], [6])[0]
+    position = StatValues.extractAnswers([dataline], [7])[0]
+    year = StatValues.extractAnswers([dataline], [14])[0]
+    age = 2014 - int(year)
+
+    edgeGroups = extractEdgeGroups(dataline)
+
+    return [ id, str(localId), name + position, age, edgeGroups ]
+
+
+# nine sequences of edge targets for the nine questions
+def extractEdgeGroups(dataline):
+    data = dataline.split('\t')
+    res = []
+    for i in range(9) :
+        group = []
+        for k in range(5) :
+            questionId = 62 + 10*i + k*2 + 1
+            node = data[questionId].split('=')[1]
+            if len(node) > 1 :
+                group.append(node)
+        res.append(group)
+    print '\nEdge groups', res
+    return res
 
 
 def extractKeys(subFolder) :
@@ -161,18 +196,8 @@ def extractEdges(s0):
     return edgeGroups
 
 
-# Extract organization full name and Id
-def MakeTitlePage(firstLine, subFolder) :
-
-    [orgId, orgName] = firstLine.split('\t')
-
-    orgName.replace('quot;','')
-    orgName =  orgName.decode("CP1251").encode("UTF-8")
-    BuildTex.addMacros(subFolder,'fullName', orgName)
-
-    orgId = orgId.split('=')[1]
-    BuildTex.addMacros(subFolder,'internalId', orgId)
     
+
 # extract age of the respondee
 def extractAge(str):
     yearInd = str.find(':"19') + 2
@@ -180,6 +205,8 @@ def extractAge(str):
     age = 2014 - int(year)
     return age
 
+
+# Split the big input file into collection of files per school
 def SplitBySchool(inFileName, outputDir) :
     f = open(inFileName, 'r')
     f1 = open(outputDir + 'topline.txt', 'w')

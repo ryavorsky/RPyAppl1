@@ -25,7 +25,7 @@ def compute71(subFolder, statData) :  # aggregate
     BuildTex.addMacros(subFolder, 'valGAyesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valGAnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie71.png', yesNum, noNum)
+    BuildCharts.YesNoPie(subFolder + '\\pie71.png', yesNumP, noNumP)
 
 
 def compute72(subFolder, statData): # by age - q14

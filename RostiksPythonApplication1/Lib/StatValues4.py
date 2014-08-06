@@ -91,5 +91,5 @@ def compute42c(subFolder, statData): # one question
     BuildTex.addMacros(subFolder, 'valDBCyesNumP', str(yesNumP))
     BuildTex.addMacros(subFolder, 'valDBCnoNumP', str(noNumP))
 
-    BuildCharts.YesNoPie(subFolder + '\\pie42_c_.png', yesNum, noNum)
+    BuildCharts.YesNoPie(subFolder + '\\pie42_c_.png', yesNumP, noNumP)
 
