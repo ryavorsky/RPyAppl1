@@ -19,7 +19,6 @@ def makeGraphObject(graphData):
 
         [id, localId, name, age, edgeGroups] = nodeData
 
-
         G.add_node(id, number=localId, shape = 'circle', style='filled', fillcolor = 'white', width = '0.8')
 
         for groupNo in range(9) :      # there are 9 groups of links
@@ -111,9 +110,6 @@ def saveFullGraphData(subFolder, G0) :
     for edge in G0.edges(data = True) :
         fgraph.write(str(edge)+'\n')
     fgraph.close()
-
-    # Save the number of employee into the Tex file
-    BuildTex.addMacros(subFolder, 'nTotal', str(len(G0.nodes())))
 
 
 # Extract subgraph for the given list of edges types

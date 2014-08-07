@@ -41,7 +41,11 @@ def extractGraphDataBlock(dataline, localId) :
     name = StatValues.extractAnswers([dataline], [6])[0]
     position = StatValues.extractAnswers([dataline], [7])[0]
     year = StatValues.extractAnswers([dataline], [14])[0]
-    age = 2014 - int(year)
+    if len(year) == 4 :
+        age = 2014 - int(year)
+    else :
+        age = 0
+        print 'Age is unknown for', id, name
 
     edgeGroups = extractEdgeGroups(dataline)
 
