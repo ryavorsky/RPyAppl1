@@ -23,6 +23,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Lib\BuildAll_Test.py" />
+    <Compile Include="Lib\BuildGraphs_Test.py" />
     <Compile Include="Lib\BuildTex.py" />
     <Compile Include="Lib\CheckFolders.py" />
     <Compile Include="Lib\BuildCharts.py" />
@@ -43,6 +45,7 @@
   <ItemGroup>
     <Content Include="README.md" />
     <Content Include="Dict.txt" />
+    <Content Include="Start.bat" />
     <Content Include="Tex\Result.tex" />
     <Content Include="Tex\title.tex" />
   </ItemGroup>
