@@ -1,0 +1,3 @@
+import BuildAll
+
+BuildAll.Main()

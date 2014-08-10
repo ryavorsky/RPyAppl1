@@ -28,6 +28,7 @@
     <Compile Include="Lib\BuildCharts.py" />
     <Compile Include="Lib\BuildAll.py" />
     <Compile Include="Lib\BuildTables.py" />
+    <Compile Include="Lib\Start.py" />
     <Compile Include="Lib\StatValues1.py" />
     <Compile Include="Lib\Tests.py" />
     <Compile Include="Lib\StatValues5.py" />

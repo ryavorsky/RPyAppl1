@@ -11,8 +11,22 @@ import BuildTex
 import CheckFolders
 import StatValues
 
+
+def Main() :
+    projectDir = 'c:\\Direktor'
+    inputDir = projectDir + '\\Input\\88'
+    outputDir = projectDir + '\\Output\\88'
+
+    outputDir = CheckFolders.TestDirs(inputDir, outputDir)
+
+    for inputFileName in os.listdir(inputDir):
+
+        makeReport(inputDir + '\\' + inputFileName, outputDir, projectDir)
+
+    print('\nSee the final results in ' + outputDir)
+
 # Make PDF report for a given input file and put it into the output folder
-def makeReport(inputFileName, outputDir):
+def makeReport(inputFileName, outputDir, projectDir):
 
     print '\n Processing input file ' + inputFileName
 
@@ -21,7 +35,7 @@ def makeReport(inputFileName, outputDir):
     [inputId, subFolder] = CheckFolders.MakeSubfolder(inputFileName, outputDir)
 
     # Move the prefilled Tex files into the subfolder
-    BuildTex.MoveFiles(subFolder)  
+    BuildTex.MoveFiles(subFolder, projectDir)  
 
     # Parse the input file  
     [graphData, statData] = ParseInput.dataFromFile(inputFileName, inputId, outputDir, subFolder)

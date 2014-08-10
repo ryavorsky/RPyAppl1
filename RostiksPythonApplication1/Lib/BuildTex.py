@@ -2,9 +2,9 @@ import shutil
 import os
 import subprocess
 
-def MoveFiles(destFolder):
+def MoveFiles(destFolder, projectDir):
 
-    sourceFolder = 'c:\\Direktor\\Tex\\'
+    sourceFolder = projectDir + '\\Tex\\'
     inputFiles = os.listdir(sourceFolder)
 
     for fileName in inputFiles:
