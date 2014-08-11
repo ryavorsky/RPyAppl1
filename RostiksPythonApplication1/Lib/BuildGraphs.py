@@ -26,11 +26,14 @@ def makeGraphObject(graphData):
                 G.add_edge(id, target, type=groupNo, color = 'lightgrey')
 
     print '\nGraph object is created.'
- 
+
     return G
 
 def BuildAllGraphs(inputId, subFolder, G0):
 
+    # Comment according to the size
+    BuildTex.addSizeComments(subFolder, len(G0.nodes()))
+ 
     # Save the graph data 
     saveFullGraphData(subFolder, G0)
     buildGraph7a(subFolder, G0)

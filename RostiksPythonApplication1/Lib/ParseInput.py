@@ -32,6 +32,9 @@ def dataFromFile(inputFileName, inputId, outputFolder, subFolder):
     f_in.close()
     f_data.close()
 
+    # Filter graph data according to the Nodes number
+    graphData = restrictOutEdges(graphData)
+
     return [graphData, statData]
 
 
@@ -56,9 +59,9 @@ def extractGraphDataBlock(dataline, localId) :
 def extractEdgeGroups(dataline):
     data = dataline.split('\t')
     res = []
-    for i in range(9) :
+    for i in range(9) : # there are 9 quesions
         group = []
-        for k in range(5) :
+        for k in range(5) : # max 5 answers
             questionId = 62 + 10*i + k*2 + 1
             node = data[questionId].split('=')[1]
             if len(node) > 1 :
@@ -66,6 +69,28 @@ def extractEdgeGroups(dataline):
         res.append(group)
     print '\nEdge groups', res
     return res
+
+
+# for small schools truncate the socio answers
+def restrictOutEdges(graphData):
+    # first, compute the restriction  
+    numOfNodes = len(graphData)
+    if numOfNodes <= 7 :
+        maxNumOfEdges = 0
+    elif numOfNodes <= 11 :
+        maxNumOfEdges = 2
+    elif numOfNodes <= 16 :
+        maxNumOfEdges = 3
+    elif numOfNodes <= 21 :
+        maxNumOfEdges = 4
+    else :
+        maxNumOfEdges = 5
+
+    for node in range(len(graphData)):
+        for question in range(9) :
+            graphData[node][4][question] = graphData[node][4][question][0:(maxNumOfEdges)]
+
+    return graphData
 
 
 def extractKeys(subFolder) :

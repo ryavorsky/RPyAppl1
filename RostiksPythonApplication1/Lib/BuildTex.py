@@ -65,3 +65,15 @@ def buildNamesList(subFolder, statData):
 
     f.close()
 
+
+def addSizeComments(subFolder, numOfNodes) :
+    if numOfNodes <= 7 :
+        addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentA')
+    elif numOfNodes <= 11 :
+        addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentB')
+    elif numOfNodes <= 16 :
+        addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentC')
+    elif numOfNodes <= 21 :
+        addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentD')
+    else :
+        addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentE')
