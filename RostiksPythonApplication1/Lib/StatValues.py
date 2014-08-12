@@ -88,18 +88,21 @@ def percent(lst) :
     for val in lst :
         s+=val
 
-    res = [int(math.floor(val*100/s + 0.5)) for val in lst]
+    if s == 0 :
+        res = [0 for val in lst]
+    else :
+        res = [int(math.floor(val*100/s + 0.5)) for val in lst]
 
-    sp = 0
-    for p in res :
-        sp += p
-    delta = 100 - sp
+        sp = 0
+        for p in res :
+            sp += p
+        delta = 100 - sp
 
-    imax = 0
-    for i in range(len(res) - 1) :
-        if res[i+1] > res[imax] :
-            imax = i + 1
-    res[imax] += delta
+        imax = 0
+        for i in range(len(res) - 1) :
+            if res[i+1] > res[imax] :
+                imax = i + 1
+        res[imax] += delta
 
     return res
 

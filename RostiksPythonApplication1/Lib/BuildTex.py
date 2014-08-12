@@ -10,6 +10,11 @@ def MoveFiles(destFolder, projectDir):
     for fileName in inputFiles:
         shutil.copy2(sourceFolder + fileName, destFolder)
 
+
+def SimplifyResult(subFolder):
+    shutil.copy2(subFolder + '\\Result_simple.tex', subFolder + '\\Result.tex')
+
+
 def CreatePdf(outputDir, subFolder, inputId, inputFileName) :
 
     print '\nProcessing Result.tex in ', subFolder

@@ -1,4 +1,5 @@
 import os
+import shutil
 import BuildTex
 import StatValues
 
@@ -134,9 +135,11 @@ def extractDataValue(value, key):
 
 
 # Split the big input file into collection of files per school
-def SplitBySchool(inFileName, outputDir) :
+def SplitBySchool():
+    inFileName = 'C:\\Direktor\\tumen_clean.csv'
+    resDir = 'C:\\Direktor\\Input\\All'
     f = open(inFileName, 'r')
-    f1 = open(outputDir + 'topline.txt', 'w')
+    f1 = open(resDir + '\\topline.txt', 'w')
 
     toprow = f.readline()
     f1.write(toprow)
@@ -146,17 +149,109 @@ def SplitBySchool(inFileName, outputDir) :
 
     for line in f.readlines() :
         data = line.split(';')
-        schoolName = data[1]
+        schoolName = data[0] + data[1]
         if schoolName == school :
             f1.write(line)
         else :
             f1.close()
             schoolId += 1
             school = schoolName
-            f1 = open(outputDir + 'exp_' + str(schoolId) + '.txt', 'w')
+            f1 = open(resDir + '\\exp_' + str(schoolId) + '.txt', 'w')
             print schoolId, schoolName
             f1.write(toprow)
             f1.write(line)
 
+    f1.close()
     f.close()
+
+
+def renameAndSortBySize() :
+    inDir = 'C:\\Direktor\\Input\\All'
+    smallDir = inDir + '\\Small\\'
+    medDir = inDir + '\\Med\\'
+    bigDir  = inDir + '\\Big\\'
+    miscDir  = inDir + '\\Misc\\'
+    os.mkdir(smallDir)
+    os.mkdir(medDir)
+    os.mkdir(bigDir)
+    os.mkdir(miscDir)
+    print 'A'
+    for fileName in os.listdir(inDir):
+        if fileName.find('.txt') > 0: 
+            print 'Dir', inDir, 'File', fileName
+            f0 = open(inDir + '\\' + fileName, 'r')
+            size = len(f0.readlines()) - 1
+            f0.close()
+            print fileName, size
+            if size > 35 :
+                targetDir = bigDir
+            elif size > 7 :
+                targetDir = medDir
+            elif size > 1 :
+                targetDir = smallDir
+            else :
+                targetDir = miscDir
+            shutil.copy2(inDir + '\\' + fileName, targetDir)
+
+
+def getId():
+    inDir = 'C:\\Direktor\\Input\\All'
+    smallDir = inDir + '\\Small'
+    medDir = inDir + '\\Med'
+    bigDir  = inDir + '\\Big'
+    miscDir  = inDir + '\\Misc'
+    os.mkdir(smallDir)
+    os.mkdir(medDir)
+    os.mkdir(bigDir)
+    os.mkdir(miscDir)
+
+    inFile = 'C:\\Direktor\\Input\\oldcodes.txt'
+    f2 = open(inFile, 'r')
+    d = dict()
+    for line in f2.readlines() :
+        [code, id] = line.split('\t')
+        d[code] = id.replace('\n','')
+        print 'id', id
+
+    f2.close()
+
+    resFile = 'C:\\Direktor\\Input\\codes.txt'
+    f1 = open(resFile, 'w')
+    for fileName in os.listdir(inDir):
+        if fileName.find('.txt') > 0: 
+
+            # Classify the size
+            print 'Dir', inDir, 'File', fileName
+            f0 = open(inDir + '\\' + fileName, 'r')
+            size = len(f0.readlines()) - 1
+            f0.close()
+            print fileName, size
+            if size > 35 :
+                targetDir = bigDir
+            elif size > 7 :
+                targetDir = medDir
+            elif size > 1 :
+                targetDir = smallDir
+            else :
+                targetDir = miscDir
+
+            f0 = open(inDir + '\\' + fileName, 'r')
+            header = f0.readline()
+            data = f0.readline().split(';')
+            f0.close()
+            if len(data) >= 6 :
+                code = data[1]+':'+data[6]+':'+data[0]
+                code = code.replace(' ','')
+                code = code.replace('&quot;','')
+                code = code.replace('"','')
+                newId = d.get(code, 'ERR')
+                f1.write(code + '\n')
+
+                if newId == 'ERR' :
+                    shutil.copy2(inDir + '\\' + fileName, miscDir)
+                else :
+                    newName = targetDir +'\\export_'+newId+'.txt' 
+                    shutil.copy2(inDir + '\\' + fileName, newName)
+    f1.close()
+
 

@@ -60,17 +60,20 @@ def Pie(fileName, data):
     for val in data :
         s = s + int(val)
 
-    fracs = [int(val*100.0/s) for val in data]
-    print fracs
-    labels = [str(p) + '%' for p in fracs ]
+    if (int(s) == 0) :
+        shutil.copy2('empty.png', fileName)
+    else :
+        fracs = [int(val*100.0/s) for val in data]
+        print fracs
+        labels = [str(p) + '%' for p in fracs ]
 
-    for i in range(len(fracs)) :
-        if fracs[i] == 0 :
-            labels[i] = ''
+        for i in range(len(fracs)) :
+            if fracs[i] == 0 :
+                labels[i] = ''
              
-    colors=['#997300','#5B9BD5','#ED7D31','#A5A5A5','#FFC000']
-    pie(fracs, labels = labels, colors=colors, startangle=90)
-    savefig(fileName)
+        colors=['#997300','#5B9BD5','#ED7D31','#A5A5A5','#FFC000']
+        pie(fracs, labels = labels, colors=colors, startangle=90)
+        savefig(fileName)
     close(1)
 
 # Building histogram from two raws of data classifies by several categories

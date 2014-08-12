@@ -23,7 +23,7 @@ def Main(projectDir = 'c:\\Direk_0') :
 
 
     fsocio = open (projectDir + '\\socio_table.txt','w')
-    header = ['SchoolId', '6', '6s', '71', '71s', '72', '72s', 'Nodes']
+    header = ['SchoolId', 'District', 'Fullname', 'Type1', 'Type2', 'Type3', 'DirektorId', 'DirektorName', '6', '6s', '71', '71s', '72', '72s', 'Nodes']
     fsocio.write('\t'.join(header) + '\n')
     fsocio.close()
     for inputFileName in os.listdir(inputDir):

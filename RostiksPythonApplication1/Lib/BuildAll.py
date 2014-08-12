@@ -48,12 +48,16 @@ def makeReport(inputFileName, outputDir, projectDir):
     # Compute the statistics values and build the charts
     StatValues.computeValues(subFolder, statData)
 
-    try :
-        # Create graphs for the reports 
-        graphObject = BuildGraphs.makeGraphObject(graphData)
-        BuildGraphs.BuildAllGraphs(inputId, subFolder, graphObject)
-    except Exception as e:
-        print e.message
+    if len(statData) < 8 :
+        print '\nNo graph data!'
+        BuildTex.SimplifyResult(subFolder)
+    else :
+        try :
+            # Create graphs for the reports 
+            graphObject = BuildGraphs.makeGraphObject(graphData)
+            BuildGraphs.BuildAllGraphs(inputId, subFolder, graphObject)
+        except Exception as e:
+            print e.message
 
     # Create PDF
     BuildTex.CreatePdf(outputDir, subFolder, inputId, inputFileName)
