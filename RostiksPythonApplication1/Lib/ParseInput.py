@@ -255,3 +255,38 @@ def getId():
     f1.close()
 
 
+def getMisc():
+    inDir = 'C:\\Direktor\\Input\\All\\Misc'
+    f0 = open('C:\\Direktor\\misc.txt', 'w')
+    os.chdir(inDir)
+
+    for fileName in os.listdir(inDir):
+        f1 = open(fileName, 'r')
+        head = f1.readline()
+        line = f1.readline().split(';')
+        size = len(f1.readlines()) + 1
+        f1.close()
+        f0.write(fileName + ';' + str(size) + ';' + ';'.join(line[0:7]) + '\n')
+
+    f0.close()
+
+
+def getMiscId():
+
+    f0 = open('C:\\Direktor\\key_misc.txt', 'r')
+    d = dict()
+    for line in f0.readlines() :
+        [code, id] = line.split('\t')
+        d[code] = id.replace('\n','')
+    f0.close()
+
+    print d
+
+    inDir = 'C:\\Direktor\\Input\\All\\Misc'
+    os.chdir(inDir)
+
+    for fileName in os.listdir(inDir):
+        newName = d.get(fileName, 'ERR')
+        print newName
+        shutil.copy2(fileName, 'C:\\Direktor\\Input\\All\\Last\\' + newName)
+

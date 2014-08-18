@@ -47,6 +47,7 @@ def MakeTitlePage(subFolder, statData) :
     p2 = subFolder.rfind('_')
     orgId = subFolder[(p1+1):p2]
     orgName = data[1].split('=')[1]
+    orgName = orgName.replace('""','"').replace('""','"')
     orgName =  orgName.decode("CP1251").encode("UTF-8")
 
     addMacros(subFolder,'fullName', orgName)
@@ -82,3 +83,78 @@ def addSizeComments(subFolder, numOfNodes) :
         addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentD')
     else :
         addMacros(subFolder, 'socioSizeComment', '\socioSizeCommentE')
+
+
+def insertFileaAfterLine(fileName, addFileName, lineNum):
+    f1 = open(fileName, 'r')
+    f2 = open(addFileName, 'r')
+    data = []
+    i = 1
+    for line in f1.readlines() :
+        if i <> lineNum :
+            data.append(line)
+            i += 1
+        else :
+            data.append(line)
+            for additionalLine in f2.readlines() :
+                data.append(additionalLine)
+            i += 1
+
+    f1.close()
+    f2.close()
+
+    f1 = open(fileName, 'w')
+    for dataLine in data:
+        f1.write(dataLine)
+    f1.close()
+
+def replaceLineWithFile(fileName, addFileName, lineNum):
+    f1 = open(fileName, 'r')
+    f2 = open(addFileName, 'r')
+    print 'Replacing line with a file:', fileName, addFileName, lineNum
+    data = []
+    i = 1
+    for line in f1.readlines() :
+        if i <> lineNum :
+            data.append(line)
+            i += 1
+        else :
+            for additionalLine in f2.readlines() :
+                data.append(additionalLine)
+            i += 1
+
+    f1.close()
+    f2.close()
+
+    f1 = open(fileName, 'w')
+    print 'Write result'
+    for dataLine in data:
+        print dataLine
+        f1.write(dataLine)
+    f1.close()
+   
+def insertTables(subFolder, orgSize):
+    print '\nInserting tables'
+    os.chdir(subFolder)
+    specs = [['slide1b.tex','nameslist.tex', 5],['slide6_3.tex','table1.tex', 18],['slide7_3a.tex','table2.tex', 20],['slide7_3b.tex','table3.tex', 19],['slide7_3c.tex','table4.tex', 20],]
+    for spec in specs :
+        (fileName, addFileName, lineNum) = spec
+        replaceLineWithFile(fileName, addFileName, lineNum)
+
+
+def splitTables(subFolder, orgSize):
+    print '\nInserting tables'
+    os.chdir(subFolder)
+    files = ['slide6_3.tex','slide7_3a.tex','slide7_3b.tex','slide7_3c.tex']
+
+    insertFileaAfterLine('slide1b.tex', 'list_split.tex', 39)
+
+    for fileName in files :
+        insertFileaAfterLine(fileName, 'table_split.tex', 55)
+
+    if orgSize > 76 :
+        insertFileaAfterLine('slide1b.tex', 'list_split.tex', 85)
+
+        for fileName in files :
+            insertFileaAfterLine(fileName, 'table_split.tex', 105)
+

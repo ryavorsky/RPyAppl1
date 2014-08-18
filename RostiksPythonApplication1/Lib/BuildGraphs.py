@@ -7,6 +7,8 @@ import math
 import networkx as nx
 import pylab as plt
 import random
+import multiprocessing
+import time
 
 import BuildTex
 import BuildTables
@@ -202,21 +204,27 @@ def aSymGraphObject(G_in, types, color = 'black') :
 
 
 def makeLayout(G, layout = 'neato', params = '') :
-    try :
-        G.layout(prog=layout, args=params)
-    except Exception:
+
+    option = [layout,'neato','fdp','twopi','sfdp','circo','neato','sfdp']
+
+    Flag = 0
+    i = 0 
+    while (Flag == 0) and (i<len(option)):
         try :
-            G.layout(prog='fdp', args = params)
-        except Exception:
-            try :
-                G.layout(prog='twopi', args = params)
-            except Exception:
-                try :
-                    G.layout(prog='sfdp', args = params)
-                except Exception:
-                    try :
-                        G.layout(prog='circo', args = params)
-                    except Exception:
-                        print'Layout failed'
+            G.layout(prog=option[i], args=params)
+            Flag = 1
+        except Exception as e:
+            print e.message
+            print 'Layout option failed -', option[i]
+            i += 1
+
+    # Finally
+    if Flag == 0 :
+        print 'NO Graph layout'
+    
     return G
+
+def handler(signum, frame):
+    print "Forever is over!"
+    raise Exception("end of time")
 

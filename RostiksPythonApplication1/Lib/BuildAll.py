@@ -16,8 +16,8 @@ import StatValues
 def Main(projectDir = 'c:\\Direktor') :
     
     print 'Start at', time.asctime()
-    inputDir = projectDir + '\\Input\\88'
-    outputDir = projectDir + '\\Output\\88'
+    inputDir = projectDir + '\\Input\\All\\More'
+    outputDir = projectDir + '\\Output\\More'
 
     outputDir = CheckFolders.TestDirs(inputDir, outputDir)
 
@@ -48,7 +48,8 @@ def makeReport(inputFileName, outputDir, projectDir):
     # Compute the statistics values and build the charts
     StatValues.computeValues(subFolder, statData)
 
-    if len(statData) < 8 :
+    orgSize = len(statData)
+    if orgSize < 8 :
         print '\nNo graph data!'
         BuildTex.SimplifyResult(subFolder)
     else :
@@ -60,6 +61,9 @@ def makeReport(inputFileName, outputDir, projectDir):
             print e.message
 
     # Create PDF
+    if orgSize > 37 :
+        BuildTex.insertTables(subFolder, orgSize)
+        BuildTex.splitTables(subFolder, orgSize)
     BuildTex.CreatePdf(outputDir, subFolder, inputId, inputFileName)
 
     #except Exception as e:
